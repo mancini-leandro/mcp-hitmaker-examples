@@ -1,0 +1,188 @@
+hit(
+  id: "promocao-produtos-pagamento",
+  name: "promocao-produtos-pagamento",
+  scope: "promotion"
+) {
+  step(
+    hid: "main",
+    navType: "push"
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%",
+      px: "md"
+    ) {
+      blocks.title(
+        title: "Soluções de Pagamento",
+        subtitle: "Escolha a melhor forma de receber pagamentos para seu negócio"
+      )
+      
+      blocks.spacer(height: 24)
+      
+      blocks.flex(
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: "md"
+      ) {
+        blocks.icon(
+          name: "credit_card",
+          size: "medium",
+          color: "colibri.content.a"
+        )
+        blocks.text(
+          children: "Formas de Pagamento Disponíveis",
+          fontSize: "lg",
+          fontWeight: "semibold",
+          color: "colibri.content.a",
+          textAlign: "center"
+        )
+        blocks.icon(
+          name: "smartphone",
+          size: "medium",
+          color: "colibri.content.a"
+        )
+      }
+      
+      blocks.spacer(height: 24)
+      
+      blocks.`solution-card-grid`(
+        cards: [
+          {
+            variant: "highlight",
+            firstDescription: "Tap On Phone - Receba pagamentos físicos através do seu celular usando tecnologia NFC. Transforme seu smartphone em uma máquina de cartão."
+          },
+          {
+            variant: "highlight",
+            firstDescription: "Link de Pagamento - Crie links de pagamento digital para vendas online. Envie por WhatsApp, email ou redes sociais."
+          }
+        ]
+      )
+      
+      blocks.spacer(height: 24)
+      
+      blocks.flex(
+        flexDirection: "column",
+        gap: "md"
+      ) {
+        blocks.flex(
+          flexDirection: "row",
+          alignItems: "center",
+          gap: "sm",
+          p: "md",
+          backgroundColor: "colibri.background.b",
+          borderRadius: "md"
+        ) {
+          blocks.icon(
+            name: "contactless_pay",
+            size: "medium",
+            color: "colibri.brand.a"
+          )
+          blocks.flex(
+            flexDirection: "column",
+            gap: "xs",
+            flex: 1
+          ) {
+            blocks.text(
+              children: "Tap On Phone",
+              fontSize: "lg",
+              fontWeight: "bold",
+              color: "colibri.content.a"
+            )
+            blocks.text(
+              children: "• Aceite cartões por aproximação (NFC)\n• Não precisa de maquininha\n• Seguro e prático\n• Ideal para vendas presenciais",
+              fontSize: "sm",
+              color: "colibri.content.b"
+            )
+          }
+        }
+        
+        blocks.`button-flex`(
+          children: "Ativar Tap On Phone",
+          variant: "primary.normal",
+          onPress => {
+            log.info(
+              name: "TAP_ON_PHONE_SELECTED",
+              msg: ["Usuário escolheu Tap On Phone"]
+            )
+          }
+        )
+        
+        blocks.spacer(height: 16)
+        
+        blocks.flex(
+          flexDirection: "row",
+          alignItems: "center",
+          gap: "sm",
+          p: "md",
+          backgroundColor: "colibri.background.b",
+          borderRadius: "md"
+        ) {
+          blocks.icon(
+            name: "link",
+            size: "medium",
+            color: "colibri.brand.a"
+          )
+          blocks.flex(
+            flexDirection: "column",
+            gap: "xs",
+            flex: 1
+          ) {
+            blocks.text(
+              children: "Link de Pagamento",
+              fontSize: "lg",
+              fontWeight: "bold",
+              color: "colibri.content.a"
+            )
+            blocks.text(
+              children: "• Crie links de pagamento instantâneo\n• Compartilhe por WhatsApp, email\n• Receba à vista ou parcelado\n• Ideal para vendas online",
+              fontSize: "sm",
+              color: "colibri.content.b"
+            )
+          }
+        }
+        
+        blocks.`button-flex`(
+          children: "Criar Link de Pagamento",
+          variant: "primary.normal",
+          onPress => {
+            log.info(
+              name: "PAYMENT_LINK_SELECTED",
+              msg: ["Usuário escolheu Link de Pagamento"]
+            )
+          }
+        )
+      }
+      
+      blocks.spacer(height: 32)
+      
+      blocks.divider()
+      
+      blocks.spacer(height: 16)
+      
+      blocks.flex(
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "sm"
+      ) {
+        blocks.icon(
+          name: "support_agent",
+          size: "medium",
+          color: "colibri.content.c"
+        )
+        blocks.text(
+          children: "Dúvidas? Entre em contato conosco",
+          fontSize: "sm",
+          color: "colibri.content.c",
+          textAlign: "center"
+        )
+        blocks.text(
+          children: "Suporte disponível 24h",
+          fontSize: "xs",
+          color: "colibri.content.d",
+          textAlign: "center"
+        )
+      }
+    }
+  }
+}

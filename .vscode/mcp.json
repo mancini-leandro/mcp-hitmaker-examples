@@ -1,0 +1,8 @@
+{
+    "servers": {
+        "hitmaker-mcp": {
+            "url": "https://hitmaker-mcp.qa.ppay.me/mcp",
+            "type": "http"
+        }
+    }
+}

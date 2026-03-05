@@ -1,0 +1,217 @@
+hit(
+  id: "cartao-adicional",
+  name: "cartao-adicional",
+  scope: "cartao-adicional"
+) {
+  step(
+    hid: "onboarding",
+    navType: "push"
+  ) {
+    templates.`product-onboarding`(
+      variant: "normal",
+      navbar: {
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      },
+      title: "Cartão Adicional PicPay",
+      subtitle: "Solicite um cartão adicional para alguém de sua confiança e mantenha tudo sob controle.",
+      image: "https://cdn.ppay.me/assets/images/cartao-adicional.png",
+      actions: {
+        primary: {
+          children: "Continuar",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "dados-pessoais"
+              }
+            )
+          }
+        },
+        tertiary: {
+          children: "Saber mais",
+          onPress => {
+            log.info(
+              msg: [fn.event],
+              name: "ONBOARDING_SABER_MAIS"
+            )
+          }
+        }
+      }
+    )
+  }
+  
+  step(
+    hid: "dados-pessoais",
+    navType: "push"
+  ) {
+    templates.`input-text-template`(
+      preset: "normal",
+      navbar: {
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        },
+        title: "Dados Pessoais"
+      },
+      title: {
+        title: "Nome completo"
+      },
+      input: {
+        placeholder: "Digite o nome completo",
+        autoCapitalize: "words",
+        onChangeText => {
+          hit.set() -> (
+            temp.nomeCompleto: fn.event
+          )
+        }
+      },
+      actions: {
+        primary: {
+          children: "Continuar",
+          showIcon: false,
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "dados-cpf"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+  
+  step(
+    hid: "dados-cpf",
+    navType: "push"
+  ) {
+    templates.`input-text-template`(
+      preset: "normal",
+      navbar: {
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        },
+        title: "Dados Pessoais"
+      },
+      title: {
+        title: "CPF"
+      },
+      input: {
+        placeholder: "000.000.000-00",
+        mask: "cpf",
+        keyboardType: "numeric"
+      },
+      actions: {
+        primary: {
+          children: "Continuar",
+          showIcon: false,
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "configuracao-limite"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+  
+  step(
+    hid: "configuracao-limite",
+    navType: "push"
+  ) {
+    templates.`input-text-template`(
+      preset: "normal",
+      navbar: {
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        },
+        title: "Configuração"
+      },
+      title: {
+        title: "Limite mensal do cartão"
+      },
+      input: {
+        placeholder: "R$ 0,00",
+        mask: "currency",
+        keyboardType: "numeric",
+        onChangeText => {
+          hit.set() -> (
+            temp.limiteCartao: fn.event
+          )
+        }
+      },
+      actions: {
+        primary: {
+          children: "Finalizar Solicitação",
+          showIcon: false,
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "confirmacao"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+  
+  step(
+    hid: "confirmacao",
+    navType: "push"
+  ) {
+    templates.`product-onboarding`(
+      variant: "normal",
+      navbar: {
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      },
+      title: "Solicitação Enviada!",
+      subtitle: "Sua solicitação de cartão adicional foi enviada com sucesso. Em breve você receberá uma confirmação por email.",
+      image: "https://cdn.ppay.me/assets/images/success-check.png",
+      actions: {
+        primary: {
+          children: "Finalizar",
+          onPress => {
+            navigation.finish()
+          }
+        },
+        tertiary: {
+          children: "Ver Resumo",
+          onPress => {
+            log.info(
+              msg: [temp.nomeCompleto, temp.limiteCartao],
+              name: "VER_RESUMO_CARTAO"
+            )
+          }
+        }
+      }
+    )
+  }
+}

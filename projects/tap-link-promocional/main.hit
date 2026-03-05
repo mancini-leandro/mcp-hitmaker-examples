@@ -1,0 +1,190 @@
+hit(
+  id: "tap-link-promocional",
+  name: "tap-link-promocional",
+  scope: "produtos-pagamento"
+) {
+  step(
+    hid: "main",
+    navType: "push"
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%",
+      showsVerticalScrollIndicator: false
+    ) {
+      blocks.`nav-bar`(
+        title: "Produtos de Pagamento",
+        backgroundColor: "background.a",
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      )
+
+      blocks.spacer(height: 24)
+
+      blocks.title(
+        title: "Modernize suas vendas",
+        description: "Escolha a melhor forma de receber pagamentos e vender mais, seja presencial ou online."
+      )
+
+      blocks.spacer(height: 32)
+
+      blocks.flex(
+        flexDirection: "column",
+        gap: "lg"
+      ) {
+        blocks.flex(
+          gap: "md",
+          alignItems: "center",
+          paddingX: "md",
+          paddingY: "lg"
+        ) {
+          blocks.flex(
+            flexDirection: "column",
+            gap: "xs"
+          ) {
+            blocks.text(
+              children: "Tap On Phone",
+              variant: "largeMedium",
+              color: "content.a"
+            )
+            
+            blocks.text(
+              children: "Transforme seu celular em uma maquininha. Receba pagamentos presenciais com tecnologia NFC, sem necessidade de equipamento adicional.",
+              variant: "contentRegular",
+              color: "content.b"
+            )
+            
+            blocks.spacer(height: 16)
+            
+            blocks.`button-flex`(
+              children: "Ativar Tap On Phone",
+              variant: "primary.normal",
+              onPress => {
+                navigation.push(
+                  path: "hitmaker",
+                  params: {
+                    hitId: "tap-on-phone",
+                    stepId: "ativacao"
+                  }
+                )
+              }
+            )
+            
+            blocks.spacer(height: 8)
+            
+            blocks.`button-flex`(
+              children: "Saiba mais",
+              variant: "secondary.normal",
+              onPress => {
+                navigation.push(
+                  path: "hitmaker",
+                  params: {
+                    hitId: "tap-on-phone",
+                    stepId: "informacoes"
+                  }
+                )
+              }
+            )
+          }
+        }
+
+        blocks.flex(
+          gap: "md",
+          alignItems: "center",
+          paddingX: "md",
+          paddingY: "lg"
+        ) {
+          blocks.flex(
+            flexDirection: "column",
+            gap: "xs"
+          ) {
+            blocks.text(
+              children: "Link de Pagamento",
+              variant: "largeMedium",
+              color: "content.a"
+            )
+            
+            blocks.text(
+              children: "Gere links de pagamento e venda por WhatsApp, Instagram e outros canais digitais. Alcance clientes em qualquer lugar.",
+              variant: "contentRegular",
+              color: "content.b"
+            )
+            
+            blocks.spacer(height: 16)
+            
+            blocks.`button-flex`(
+              children: "Criar Link de Pagamento",
+              variant: "primary.normal",
+              onPress => {
+                navigation.push(
+                  path: "hitmaker",
+                  params: {
+                    hitId: "link-pagamento",
+                    stepId: "criacao"
+                  }
+                )
+              }
+            )
+            
+            blocks.spacer(height: 8)
+            
+            blocks.`button-flex`(
+              children: "Saiba mais",
+              variant: "secondary.normal",
+              onPress => {
+                navigation.push(
+                  path: "hitmaker",
+                  params: {
+                    hitId: "link-pagamento",
+                    stepId: "informacoes"
+                  }
+                )
+              }
+            )
+          }
+        }
+      }
+
+      blocks.spacer(height: 24)
+
+      blocks.box(px: "md") {
+        blocks.text(
+          children: "Dicas para maximizar suas vendas:",
+          variant: "mediumMedium",
+          color: "content.a"
+        )
+
+        blocks.spacer(height: 16)
+
+        blocks.flex(
+          flexDirection: "column",
+          gap: "sm"
+        ) {
+          blocks.text(
+            children: "• Use Tap On Phone para vendas presenciais rápidas e seguras",
+            variant: "contentRegular",
+            color: "content.b"
+          )
+          
+          blocks.text(
+            children: "• Compartilhe Links de Pagamento nas suas redes sociais",
+            variant: "contentRegular",
+            color: "content.b"
+          )
+          
+          blocks.text(
+            children: "• Combine ambas as soluções para cobrir todos os canais",
+            variant: "contentRegular",
+            color: "content.b"
+          )
+        }
+      }
+
+      blocks.spacer(height: 32)
+    }
+  }
+}

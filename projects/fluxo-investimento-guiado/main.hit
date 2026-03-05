@@ -1,0 +1,543 @@
+hit(
+  id: "fluxo-investimento-guiado",
+  name: "fluxo-investimento-guiado",
+  scope: "investimentos"
+) {
+  step(
+    hid: "onboarding-inicial",
+    navType: "push"
+  ) {
+    templates.`product-onboarding`(
+      variant: "normal",
+      navbar: {
+        progressBar: { value: 10 },
+        trailingIconButton: {
+          accessibilityLabel: "Fechar",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      },
+      title: "Bem-vindo aos investimentos!",
+      subtitle: "Vamos te guiar para encontrar os melhores investimentos para o seu perfil.",
+      image: "https://cdn.ppay.me/assets/images/investment-intro.png",
+      actions: {
+        primary: {
+          children: "Começar",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "onboarding-educativo"
+              }
+            )
+          }
+        },
+        tertiary: {
+          children: "Saiba mais",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "educativo-detalhado"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "onboarding-educativo",
+    navType: "push"
+  ) {
+    templates.`product-onboarding`(
+      variant: "normal",
+      navbar: {
+        progressBar: { value: 25 },
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      },
+      title: "Por que investir?",
+      subtitle: "Descubra como fazer seu dinheiro render mais que a poupança.",
+      image: "https://cdn.ppay.me/assets/images/investment-benefits.png",
+      list: {
+        data: [
+          { label: "Rentabilidade superior à poupança" },
+          { label: "Diversificação de investimentos" },
+          { label: "Proteção contra a inflação" },
+          { label: "Possibilidade de renda passiva" }
+        ],
+        renderItem: render<templates.`shape-list-single-select-template-item`>(
+          contentArea: {
+            variant: "label",
+            label: item.label
+          }
+        )
+      },
+      actions: {
+        primary: {
+          children: "Continuar",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "questionario-perfil-1"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "educativo-detalhado",
+    navType: "push"
+  ) {
+    templates.`product-onboarding`(
+      variant: "normal",
+      navbar: {
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      },
+      title: "Investimentos explicados",
+      subtitle: "Entenda melhor o mundo dos investimentos.",
+      image: "https://cdn.ppay.me/assets/images/investment-education.png",
+      list: {
+        data: [
+          { label: "Renda fixa: segurança e previsibilidade" },
+          { label: "Renda variável: maior potencial de retorno" },
+          { label: "Fundos de investimento: diversificação" },
+          { label: "Tesouro Direto: títulos públicos seguros" }
+        ],
+        renderItem: render<templates.`shape-list-single-select-template-item`>(
+          contentArea: {
+            variant: "label",
+            label: item.label
+          }
+        )
+      },
+      actions: {
+        primary: {
+          children: "Fazer questionário",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "questionario-perfil-1"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "questionario-perfil-1",
+    navType: "push"
+  ) {
+    templates.`shape-list-single-select-template`(
+      navbar: {
+        progressBar: { value: 40 },
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      },
+      title: {
+        title: "Qual sua experiência com investimentos?",
+        description: "Escolha a opção que melhor te representa"
+      },
+      list: {
+        data: [
+          {
+            label: "Nunca investi antes",
+            value: "iniciante"
+          },
+          {
+            label: "Já investi em poupança/CDB",
+            value: "basico"
+          },
+          {
+            label: "Tenho alguns investimentos variados",
+            value: "intermediario"
+          },
+          {
+            label: "Sou experiente em investimentos",
+            value: "avancado"
+          }
+        ],
+        onPress => {
+          hit.set() -> (
+            temp.perfil_experiencia: fn.event.value
+          )
+          log.info(
+            msg: [fn.event],
+            name: "PERFIL_EXPERIENCIA_SELECIONADO"
+          )
+        },
+        renderItem: render<templates.`shape-list-single-select-template-item`>(
+          contentArea: {
+            variant: "label",
+            label: item.label
+          }
+        )
+      },
+      actions: {
+        primary: {
+          children: "Próxima",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "questionario-perfil-2"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "questionario-perfil-2",
+    navType: "push"
+  ) {
+    templates.`shape-list-single-select-template`(
+      navbar: {
+        progressBar: { value: 60 },
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      },
+      title: {
+        title: "Qual seu objetivo de investimento?",
+        description: "Selecione seu principal objetivo"
+      },
+      list: {
+        data: [
+          {
+            label: "Reserva de emergência",
+            value: "emergencia"
+          },
+          {
+            label: "Aposentadoria (longo prazo)",
+            value: "aposentadoria"
+          },
+          {
+            label: "Comprar casa/carro",
+            value: "objetivos"
+          },
+          {
+            label: "Renda extra mensal",
+            value: "renda"
+          }
+        ],
+        onPress => {
+          hit.set() -> (
+            temp.perfil_objetivo: fn.event.value
+          )
+          log.info(
+            msg: [fn.event],
+            name: "PERFIL_OBJETIVO_SELECIONADO"
+          )
+        },
+        renderItem: render<templates.`shape-list-single-select-template-item`>(
+          contentArea: {
+            variant: "label",
+            label: item.label
+          }
+        )
+      },
+      actions: {
+        primary: {
+          children: "Próxima",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "questionario-perfil-3"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "questionario-perfil-3",
+    navType: "push"
+  ) {
+    templates.`shape-list-single-select-template`(
+      navbar: {
+        progressBar: { value: 80 },
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      },
+      title: {
+        title: "Como você reage às oscilações?",
+        description: "Imagine que seu investimento perdeu 10% em um mês"
+      },
+      list: {
+        data: [
+          {
+            label: "Ficaria muito preocupado e venderia",
+            value: "conservador"
+          },
+          {
+            label: "Ficaria preocupado mas manteria",
+            value: "moderado"
+          },
+          {
+            label: "Entenderia que é normal e aguardaria",
+            value: "arrojado"
+          },
+          {
+            label: "Aproveitaria para investir mais",
+            value: "agressivo"
+          }
+        ],
+        onPress => {
+          hit.set() -> (
+            temp.perfil_risco: fn.event.value
+          )
+          log.info(
+            msg: [fn.event],
+            name: "PERFIL_RISCO_SELECIONADO"
+          )
+        },
+        renderItem: render<templates.`shape-list-single-select-template-item`>(
+          contentArea: {
+            variant: "label",
+            label: item.label
+          }
+        )
+      },
+      actions: {
+        primary: {
+          children: "Ver sugestões",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "sugestoes-investimentos"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "sugestoes-investimentos",
+    navType: "push"
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%",
+      px: "sm"
+    ) {
+      blocks.`nav-progress-bar`(
+        value: 100,
+        accessibilityLabel: "Questionário concluído"
+      )
+
+      blocks.spacer(height: 16)
+
+      blocks.title(
+        title: "Seus investimentos recomendados",
+        subtitle: "Baseado no seu perfil, essas são nossas sugestões"
+      )
+
+      blocks.spacer(height: 16)
+
+      blocks.`hero-card-item`(
+        variant: "highlight-normal",
+        title: "Tesouro Selic",
+        subtitle: "Renda fixa",
+        value: "100% do CDI",
+        description: "Liquidez diária",
+        descriptionValue: "Risco baixo",
+        buttonLabel: "Investir agora",
+        onPress => {
+          log.info(
+            msg: [fn.event],
+            name: "TESOURO_SELIC_CLICADO"
+          )
+          navigation.push(
+            path: "hitmaker",
+            params: {
+              hitId: hit.id,
+              stepId: "detalhes-investimento"
+            }
+          )
+        }
+      )
+
+      blocks.spacer(height: 8)
+
+      blocks.`hero-card-item`(
+        variant: "default-normal",
+        title: "CDB Premium",
+        subtitle: "Renda fixa",
+        value: "110% do CDI",
+        description: "Prazo mínimo",
+        descriptionValue: "90 dias",
+        buttonLabel: "Ver detalhes",
+        onPress => {
+          log.info(
+            msg: [fn.event],
+            name: "CDB_PREMIUM_CLICADO"
+          )
+          navigation.push(
+            path: "hitmaker",
+            params: {
+              hitId: hit.id,
+              stepId: "detalhes-investimento"
+            }
+          )
+        }
+      )
+
+      blocks.spacer(height: 8)
+
+      blocks.`hero-card-item`(
+        variant: "default-normal",
+        title: "Fundo Conservador",
+        subtitle: "Fundo de investimento",
+        value: "105% do CDI",
+        description: "Gestão profissional",
+        descriptionValue: "Diversificado",
+        buttonLabel: "Saiba mais",
+        onPress => {
+          log.info(
+            msg: [fn.event],
+            name: "FUNDO_CONSERVADOR_CLICADO"
+          )
+          navigation.push(
+            path: "hitmaker",
+            params: {
+              hitId: hit.id,
+              stepId: "detalhes-investimento"
+            }
+          )
+        }
+      )
+
+      blocks.spacer(height: 24)
+
+      blocks.`button-flex`(
+        children: "Finalizar questionário",
+        variant: "primary.normal",
+        onPress => {
+          navigation.finish()
+        }
+      )
+
+      blocks.spacer(height: 8)
+
+      blocks.`button-flex`(
+        children: "Refazer questionário",
+        variant: "secondary.normal",
+        onPress => {
+          navigation.push(
+            path: "hitmaker",
+            params: {
+              hitId: hit.id,
+              stepId: "questionario-perfil-1"
+            }
+          )
+        }
+      )
+
+      blocks.spacer(height: 16)
+    }
+  }
+
+  step(
+    hid: "detalhes-investimento",
+    navType: "push"
+  ) {
+    templates.`product-onboarding`(
+      variant: "normal",
+      navbar: {
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      },
+      title: "Detalhes do investimento",
+      subtitle: "Conheça melhor essa opção antes de investir.",
+      image: "https://cdn.ppay.me/assets/images/investment-details.png",
+      list: {
+        data: [
+          { label: "Investimento garantido pelo FGC" },
+          { label: "Rentabilidade pós-fixada" },
+          { label: "Sem taxas de administração" },
+          { label: "Aplicação mínima: R$ 100" }
+        ],
+        renderItem: render<templates.`shape-list-single-select-template-item`>(
+          contentArea: {
+            variant: "label",
+            label: item.label
+          }
+        )
+      },
+      actions: {
+        primary: {
+          children: "Investir R$ 100",
+          onPress => {
+            log.info(
+              msg: [fn.event],
+              name: "INVESTIMENTO_INICIADO"
+            )
+            navigation.finish()
+          }
+        },
+        tertiary: {
+          children: "Ver outras opções",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "sugestoes-investimentos"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+}

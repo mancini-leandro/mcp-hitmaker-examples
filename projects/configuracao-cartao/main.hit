@@ -1,0 +1,245 @@
+hit(
+  id: "configuracao-cartao",
+  name: "configuracao-cartao",
+  scope: "cartao"
+) {
+  step(
+    hid: "endereco-entrega",
+    navType: "push"
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%",
+      px: "sm"
+    ) {
+      blocks.`nav-progress-bar`(
+        value: 1,
+        variant: "normal"
+      )
+      
+      blocks.spacer(height: "lg")
+      
+      blocks.title(
+        title: "Confirme onde você quer receber seu cartão",
+        variant: "normal"
+      )
+      
+      blocks.spacer(height: "sm")
+      
+      blocks.text(
+        children: "Um maior de idade deve estar no local em horário comercial pra receber o cartão.",
+        color: "colibri.content.c"
+      )
+      
+      blocks.spacer(height: "xl")
+      
+      blocks.`shape-list-single-select-item`(
+        contentArea: {
+          variant: "label+bigLabel",
+          label: "Endereço de entrega",
+          bigLabel: "Av. Manuel Bandeira, 45 - Apartamento 123 - Vila Mariana/SP"
+        },
+        checked: true,
+        onPress => {
+          hit.set() -> (
+            temp.endereco_selecionado: "principal"
+          )
+        }
+      )
+      
+      blocks.spacer(height: "md")
+      
+      blocks.`shape-list-single-select-item`(
+        contentArea: {
+          variant: "bigLabel",
+          bigLabel: "Em outro endereço"
+        },
+        checked: false,
+        onPress => {
+          hit.set() -> (
+            temp.endereco_selecionado: "outro"
+          )
+        }
+      )
+      
+      blocks.spacer(height: "xl")
+      
+      blocks.`button-flex`(
+        children: "Continuar",
+        variant: "primary.normal",
+        onPress => {
+          navigation.push(
+            path: "hitmaker",
+            params: {
+              hitId: hit.id,
+              stepId: "vencimento-fatura"
+            }
+          )
+        }
+      )
+    }
+  }
+  
+  step(
+    hid: "vencimento-fatura",
+    navType: "push"
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%",
+      px: "sm"
+    ) {
+      blocks.`nav-progress-bar`(
+        value: 2,
+        variant: "normal"
+      )
+      
+      blocks.spacer(height: "lg")
+      
+      blocks.title(
+        title: "Escolha o dia pro vencimento da fatura do cartão",
+        variant: "normal"
+      )
+      
+      blocks.spacer(height: "sm")
+      
+      blocks.text(
+        children: "Você pode alterar novamente daqui 90 dias.",
+        color: "colibri.content.c"
+      )
+      
+      blocks.spacer(height: "xl")
+      
+      blocks.`chips-group`(
+        items: [
+          { id: "01", label: "01" },
+          { id: "05", label: "05" },
+          { id: "10", label: "10" },
+          { id: "15", label: "15" },
+          { id: "20", label: "20" },
+          { id: "25", label: "25" }
+        ],
+        variant: "normal",
+        multiple: false,
+        onPress => {
+          hit.set() -> (
+            temp.dia_vencimento: item.id
+          )
+        }
+      )
+      
+      blocks.spacer(height: "xl")
+      
+      blocks.`button-flex`(
+        children: "Continuar",
+        variant: "primary.normal",
+        onPress => {
+          navigation.push(
+            path: "hitmaker",
+            params: {
+              hitId: hit.id,
+              stepId: "nome-titular"
+            }
+          )
+        }
+      )
+    }
+  }
+  
+  step(
+    hid: "nome-titular",
+    navType: "push"
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%",
+      px: "sm"
+    ) {
+      blocks.`nav-progress-bar`(
+        value: 3,
+        variant: "normal"
+      )
+      
+      blocks.spacer(height: "lg")
+      
+      blocks.title(
+        title: "Digite o nome do titular",
+        variant: "normal"
+      )
+      
+      blocks.spacer(height: "sm")
+      
+      blocks.text(
+        children: "Este nome será impresso no cartão.",
+        color: "colibri.content.c"
+      )
+      
+      blocks.spacer(height: "xl")
+      
+      blocks.`input-text`(
+        placeholder: "Nome do titular",
+        value: "Marcelo Bella",
+        maxLength: 20,
+        onChangeText => {
+          hit.set() -> (
+            temp.nome_titular: fn.event.text
+          )
+        }
+      )
+      
+      blocks.spacer(height: "xl")
+      
+      blocks.`button-flex`(
+        children: "Continuar",
+        variant: "primary.normal",
+        onPress => {
+          navigation.push(
+            path: "hitmaker",
+            params: {
+              hitId: hit.id,
+              stepId: "sucesso"
+            }
+          )
+        }
+      )
+    }
+  }
+  
+  step(
+    hid: "sucesso",
+    navType: "push"
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%",
+      px: "sm"
+    ) {
+      blocks.center(
+        width: "100%",
+        height: "100%"
+      ) {
+        blocks.title(
+          title: "Configuração concluída!",
+          variant: "normal"
+        )
+        
+        blocks.spacer(height: "md")
+        
+        blocks.text(
+          children: "Seu cartão será enviado para o endereço selecionado em até 10 dias úteis.",
+          color: "colibri.content.c"
+        )
+        
+        blocks.spacer(height: "xl")
+        
+        blocks.`button-flex`(
+          children: "Finalizar",
+          variant: "primary.normal",
+          onPress => {
+            navigation.finish()
+          }
+        )
+      }
+    }
+  }
+}

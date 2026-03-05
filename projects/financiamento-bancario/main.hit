@@ -1,0 +1,632 @@
+hit(
+  id: "financiamento-bancario",
+  name: "financiamento-bancario",
+  scope: "banking"
+) {
+  step(
+    hid: "inicio",
+    navType: "push"
+  ) {
+    templates.`product-onboarding`(
+      variant: "normal",
+      navbar: {
+        trailingIconButton: {
+          accessibilityLabel: "Fechar",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      },
+      image: "https://cdn.ppay.me/assets/images/img4.png",
+      title: "Financiamento Bancário 100% Digital",
+      subtitle: "Simule, envie sua proposta e acompanhe tudo pelo app de forma rápida e segura.",
+      list: {
+        data: [
+          {
+            label: "Simulação em tempo real"
+          },
+          {
+            label: "Processo 100% digital"
+          },
+          {
+            label: "Aprovação em até 48h"
+          },
+          {
+            label: "Acompanhamento em tempo real"
+          }
+        ],
+        renderItem: render<blocks.`list-item`>(
+          contentArea: {
+            variant: "label",
+            label: item.label
+          },
+          identifier: {
+            variant: "icon.neutral-dark",
+            icon: "apl3_ic_check_circle"
+          }
+        )
+      },
+      actions: {
+        primary: {
+          children: "Iniciar Simulação",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "valor-financiamento"
+              }
+            )
+          }
+        },
+        tertiary: {
+          children: "Saiba mais",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "informacoes"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "informacoes",
+    navType: "push"
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%",
+      px: "sm"
+    ) {
+      blocks.`nav-bar`(
+        title: "Sobre o Financiamento",
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      )
+      blocks.box(py: "md") {
+        blocks.text(
+          children: "O financiamento bancário digital permite que você solicite crédito de forma 100% online.",
+          variant: "body-1",
+          color: "colibri.content.a"
+        )
+      }
+      blocks.box(py: "md") {
+        blocks.text(
+          children: "Documentos necessários:",
+          variant: "subtitle-2",
+          color: "colibri.content.a"
+        )
+      }
+      blocks.box(py: "xs") {
+        blocks.text(
+          children: "• RG ou CNH",
+          variant: "body-2",
+          color: "colibri.content.a"
+        )
+      }
+      blocks.box(py: "xs") {
+        blocks.text(
+          children: "• Comprovante de residência",
+          variant: "body-2",
+          color: "colibri.content.a"
+        )
+      }
+      blocks.box(py: "xs") {
+        blocks.text(
+          children: "• Comprovante de renda",
+          variant: "body-2",
+          color: "colibri.content.a"
+        )
+      }
+      blocks.box(py: "xl") {
+        blocks.`button-flex`(
+          children: "Voltar",
+          variant: "primary.normal",
+          onPress => {
+            navigation.goBack()
+          }
+        )
+      }
+    }
+  }
+
+  step(
+    hid: "valor-financiamento",
+    navType: "push"
+  ) {
+    templates.`input-text-template`(
+      preset: "normal",
+      navbar: {
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        },
+        title: "Simulação",
+        progressBar: {
+          value: 0.33,
+          accessibilityLabel: "Etapa 1 de 3"
+        }
+      },
+      title: {
+        title: "Qual valor você precisa?"
+      },
+      input: {
+        placeholder: "R$ 0,00",
+        mask: "currency",
+        onChangeText => {
+          hit.set() -> (
+            temp.valorFinanciamento: fn.event
+          )
+        }
+      },
+      actions: {
+        primary: {
+          children: "Continuar",
+          showIcon: false,
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "prazo-financiamento"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "prazo-financiamento",
+    navType: "push"
+  ) {
+    templates.`input-text-template`(
+      preset: "normal",
+      navbar: {
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        },
+        title: "Simulação",
+        progressBar: {
+          value: 0.66,
+          accessibilityLabel: "Etapa 2 de 3"
+        }
+      },
+      title: {
+        title: "Em quantos meses deseja pagar?"
+      },
+      input: {
+        placeholder: "Ex: 12",
+        mask: "numeric",
+        onChangeText => {
+          hit.set() -> (
+            temp.prazoFinanciamento: fn.event
+          )
+        }
+      },
+      actions: {
+        primary: {
+          children: "Ver Simulação",
+          showIcon: false,
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "resultado-simulacao"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "resultado-simulacao",
+    navType: "push"
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%",
+      px: "sm"
+    ) {
+      blocks.`nav-bar`(
+        title: "Resultado da Simulação",
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        },
+        progressBar: {
+          value: 1.0,
+          accessibilityLabel: "Etapa 3 de 3"
+        }
+      )
+      blocks.box(py: "lg") {
+        blocks.text(
+          children: "Resumo do Financiamento",
+          variant: "subtitle-1",
+          color: "colibri.content.a"
+        )
+      }
+      blocks.box(py: "sm") {
+        blocks.container(
+          backgroundColor: "colibri.background.c"
+        ) {
+          blocks.box(px: "md", py: "md") {
+            blocks.flex(
+              flexDirection: "row",
+              justifyContent: "space-between",
+              pb: "sm"
+            ) {
+              blocks.text(
+                children: "Valor solicitado",
+                variant: "body-2",
+                color: "colibri.content.b"
+              )
+              blocks.text(
+                children: "R$ 10.000,00",
+                variant: "body-2",
+                color: "colibri.content.a"
+              )
+            }
+            blocks.flex(
+              flexDirection: "row",
+              justifyContent: "space-between",
+              pb: "sm"
+            ) {
+              blocks.text(
+                children: "Prazo",
+                variant: "body-2",
+                color: "colibri.content.b"
+              )
+              blocks.text(
+                children: "12 meses",
+                variant: "body-2",
+                color: "colibri.content.a"
+              )
+            }
+            blocks.flex(
+              flexDirection: "row",
+              justifyContent: "space-between",
+              pb: "sm"
+            ) {
+              blocks.text(
+                children: "Taxa de juros ao mês",
+                variant: "body-2",
+                color: "colibri.content.b"
+              )
+              blocks.text(
+                children: "1,99%",
+                variant: "body-2",
+                color: "colibri.content.a"
+              )
+            }
+            blocks.flex(
+              flexDirection: "row",
+              justifyContent: "space-between",
+              pb: "sm"
+            ) {
+              blocks.text(
+                children: "CET ao mês",
+                variant: "body-2",
+                color: "colibri.content.b"
+              )
+              blocks.text(
+                children: "2,15%",
+                variant: "body-2",
+                color: "colibri.content.a"
+              )
+            }
+            blocks.divider(my: "sm")
+            blocks.flex(
+              flexDirection: "row",
+              justifyContent: "space-between"
+            ) {
+              blocks.text(
+                children: "Valor da parcela",
+                variant: "subtitle-2",
+                color: "colibri.content.a"
+              )
+              blocks.text(
+                children: "R$ 450,00",
+                variant: "subtitle-1",
+                color: "colibri.brand.a"
+              )
+            }
+          }
+        }
+      }
+      blocks.box(py: "md") {
+        blocks.text(
+          children: "CET (Custo Efetivo Total): representa o custo total da operação.",
+          variant: "caption",
+          color: "colibri.content.b"
+        )
+      }
+      blocks.box(py: "lg") {
+        blocks.`button-flex`(
+          children: "Continuar com a Proposta",
+          variant: "primary.normal",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "envio-proposta"
+              }
+            )
+          }
+        )
+      }
+      blocks.box(pb: "md") {
+        blocks.`button-flex`(
+          children: "Fazer Nova Simulação",
+          variant: "secondary.normal",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "valor-financiamento"
+              }
+            )
+          }
+        )
+      }
+    }
+  }
+
+  step(
+    hid: "envio-proposta",
+    navType: "push"
+  ) {
+    templates.`success-image`(
+      navbar: {
+        trailingIconButton: {
+          accessibilityLabel: "Fechar",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      },
+      imageUrl: "https://cdn.ppay.me/assets/images/img3.png",
+      title: {
+        title: "Proposta enviada com sucesso!",
+        subtitle: "Sua solicitação está em análise."
+      },
+      sectionTitle: {
+        title: "Resumo"
+      },
+      list: {
+        data: [
+          {
+            contentArea: {
+              variant: "plus+label",
+              label: "Valor",
+              plus: "R$ 10.000,00"
+            }
+          },
+          {
+            contentArea: {
+              variant: "plus+label",
+              label: "Prazo",
+              plus: "12 meses"
+            }
+          },
+          {
+            contentArea: {
+              variant: "plus+label",
+              label: "Status",
+              plus: "Em análise"
+            }
+          }
+        ]
+      },
+      actions: {
+        primary: {
+          children: "Acompanhar Status",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "acompanhamento"
+              }
+            )
+          }
+        },
+        tertiary: {
+          children: "Voltar ao Início",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "acompanhamento",
+    navType: "push"
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%",
+      px: "sm"
+    ) {
+      blocks.`nav-bar`(
+        title: "Acompanhamento",
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      )
+      blocks.box(py: "lg") {
+        blocks.text(
+          children: "Status da sua proposta",
+          variant: "subtitle-1",
+          color: "colibri.content.a"
+        )
+      }
+      blocks.box(py: "sm") {
+        blocks.container(
+          backgroundColor: "colibri.background.c"
+        ) {
+          blocks.box(px: "md", py: "md") {
+            blocks.flex(
+              flexDirection: "row",
+              justifyContent: "space-between",
+              pb: "sm"
+            ) {
+              blocks.text(
+                children: "Protocolo",
+                variant: "body-2",
+                color: "colibri.content.b"
+              )
+              blocks.text(
+                children: "202602271234",
+                variant: "body-2",
+                color: "colibri.content.a"
+              )
+            }
+            blocks.flex(
+              flexDirection: "row",
+              justifyContent: "space-between",
+              pb: "sm"
+            ) {
+              blocks.text(
+                children: "Data de envio",
+                variant: "body-2",
+                color: "colibri.content.b"
+              )
+              blocks.text(
+                children: "27/02/2026",
+                variant: "body-2",
+                color: "colibri.content.a"
+              )
+            }
+            blocks.divider(my: "sm")
+            blocks.flex(
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center"
+            ) {
+              blocks.text(
+                children: "Status atual",
+                variant: "subtitle-2",
+                color: "colibri.content.a"
+              )
+              blocks.badge(
+                value: 1,
+                type: "notification",
+                variant: "default",
+                size: "medium"
+              )
+            }
+          }
+        }
+      }
+      blocks.box(py: "md") {
+        blocks.text(
+          children: "Histórico",
+          variant: "subtitle-2",
+          color: "colibri.content.a"
+        )
+      }
+      blocks.box(py: "xs") {
+        blocks.flex(
+          flexDirection: "row",
+          alignItems: "center"
+        ) {
+          blocks.icon(
+            name: "apl3_ic_check_circle",
+            color: "support.success.a"
+          )
+          blocks.box(pl: "sm") {
+            blocks.text(
+              children: "Proposta enviada - 27/02/2026 10:30",
+              variant: "body-2",
+              color: "colibri.content.a"
+            )
+          }
+        }
+      }
+      blocks.box(py: "xs") {
+        blocks.flex(
+          flexDirection: "row",
+          alignItems: "center"
+        ) {
+          blocks.icon(
+            name: "apl3_ic_clock",
+            color: "support.caution.a"
+          )
+          blocks.box(pl: "sm") {
+            blocks.text(
+              children: "Em análise de crédito - aguardando",
+              variant: "body-2",
+              color: "colibri.content.a"
+            )
+          }
+        }
+      }
+      blocks.box(py: "md") {
+        blocks.container(
+          backgroundColor: "colibri.background.d"
+        ) {
+          blocks.box(px: "md", py: "md") {
+            blocks.text(
+              children: "A análise pode levar até 48 horas úteis. Você receberá uma notificação.",
+              variant: "body-2",
+              color: "colibri.content.a"
+            )
+          }
+        }
+      }
+      blocks.box(py: "lg") {
+        blocks.`button-flex`(
+          children: "Atualizar Status",
+          variant: "primary.normal",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "acompanhamento"
+              }
+            )
+          }
+        )
+      }
+      blocks.box(pb: "md") {
+        blocks.`button-flex`(
+          children: "Voltar ao Início",
+          variant: "secondary.normal",
+          onPress => {
+            navigation.goBack()
+          }
+        )
+      }
+    }
+  }
+}

@@ -1,0 +1,465 @@
+hit(
+  id: "onboarding-emprestimo",
+  name: "onboarding-emprestimo",
+  scope: "emprestimo-financeiro"
+) {
+  step(
+    hid: "boas-vindas",
+    navType: "push"
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%",
+      px: "sm"
+    ) {
+      blocks.header(
+        avatar: {
+          initials: "FN",
+          variant: "initials.neutral-dark",
+          accessibilityLabel: "Financeira"
+        },
+        searchBar: {
+          placeholder: "Bem-vindo(a)",
+          accessibilityLabel: "Área de boas-vindas"
+        },
+        iconButtons: []
+      )
+      
+      blocks.`nav-progress-bar`(
+        value: 10,
+        accessibilityLabel: "Progresso do onboarding - Etapa 1 de 6"
+      )
+      
+      blocks.spacer(my: "lg")
+      
+      blocks.title(
+        title: "Bem-vindo ao seu empréstimo!",
+        description: "Para continuar, precisamos conhecer você melhor. São apenas algumas informações que nos ajudarão a oferecer as melhores condições."
+      )
+      
+      blocks.spacer(my: "xl")
+      
+      blocks.`button-bundle`(
+        primary: {
+          children: "Começar cadastro",
+          showIcon: false,
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "dados-pessoais"
+              }
+            )
+          }
+        },
+        tertiary: {
+          children: "Já tenho cadastro",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "login-existente"
+              }
+            )
+          }
+        }
+      )
+    }
+  }
+  
+  step(
+    hid: "dados-pessoais",
+    navType: "push"
+  ) {
+    templates.`input-text-template`(
+      preset: "normal",
+      navbar: {
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        },
+        progressBar: {
+          value: 25,
+          accessibilityLabel: "Progresso 25% - Dados pessoais"
+        },
+        title: "Dados Pessoais"
+      },
+      title: {
+        title: "Qual é o seu nome completo?",
+        description: "Informe seu nome completo como consta nos seus documentos"
+      },
+      input: {
+        placeholder: "Digite seu nome completo",
+        onChangeText => {
+          hit.set() -> (
+            temp.nomeCompleto: fn.event.text
+          )
+        }
+      },
+      actions: {
+        primary: {
+          children: "Continuar",
+          showIcon: false,
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "documento"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+  
+  step(
+    hid: "documento",
+    navType: "push"
+  ) {
+    templates.`input-text-template`(
+      preset: "normal",
+      navbar: {
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        },
+        progressBar: {
+          value: 40,
+          accessibilityLabel: "Progresso 40% - Documento"
+        },
+        title: "Documento"
+      },
+      title: {
+        title: "Digite seu CPF",
+        description: "Precisamos validar sua identidade para continuar"
+      },
+      input: {
+        placeholder: "000.000.000-00",
+        mask: "cpf",
+        onChangeText => {
+          hit.set() -> (
+            temp.cpf: fn.event.text
+          )
+        }
+      },
+      actions: {
+        primary: {
+          children: "Continuar",
+          showIcon: false,
+          onPress => {
+            hit.validate(
+              value: temp.cpf,
+              type: "cpf"
+            ) -> (
+              temp.cpfValido: fn.result
+            )
+            
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "contato"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+  
+  step(
+    hid: "contato",
+    navType: "push"
+  ) {
+    templates.`input-text-template`(
+      preset: "normal",
+      navbar: {
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        },
+        progressBar: {
+          value: 60,
+          accessibilityLabel: "Progresso 60% - Contato"
+        },
+        title: "Contato"
+      },
+      title: {
+        title: "Qual é o seu telefone?",
+        description: "Usaremos para entrar em contato sobre seu empréstimo"
+      },
+      input: {
+        placeholder: "(00) 00000-0000",
+        mask: "phone",
+        onChangeText => {
+          hit.set() -> (
+            temp.telefone: fn.event.text
+          )
+        }
+      },
+      actions: {
+        primary: {
+          children: "Continuar",
+          showIcon: false,
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "email"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+  
+  step(
+    hid: "email",
+    navType: "push"
+  ) {
+    templates.`input-text-template`(
+      preset: "normal",
+      navbar: {
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        },
+        progressBar: {
+          value: 80,
+          accessibilityLabel: "Progresso 80% - Email"
+        },
+        title: "Email"
+      },
+      title: {
+        title: "Qual é o seu email?",
+        description: "Enviaremos atualizações sobre seu empréstimo por email"
+      },
+      input: {
+        placeholder: "seuemail@exemplo.com",
+        onChangeText => {
+          hit.set() -> (
+            temp.email: fn.event.text
+          )
+        }
+      },
+      actions: {
+        primary: {
+          children: "Continuar",
+          showIcon: false,
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "confirmacao"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+  
+  step(
+    hid: "confirmacao",
+    navType: "push"
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%",
+      px: "sm"
+    ) {
+      blocks.header(
+        avatar: {
+          initials: "FN",
+          variant: "initials.neutral-dark",
+          accessibilityLabel: "Financeira"
+        },
+        searchBar: {
+          placeholder: "Confirmação",
+          accessibilityLabel: "Área de confirmação"
+        },
+        iconButtons: []
+      )
+      
+      blocks.`nav-progress-bar`(
+        value: 100,
+        accessibilityLabel: "Progresso 100% - Confirmação"
+      )
+      
+      blocks.spacer(my: "lg")
+      
+      blocks.title(
+        title: "Confirme seus dados",
+        description: "Verifique se as informações estão corretas antes de finalizar"
+      )
+      
+      blocks.spacer(my: "md")
+      
+      blocks.`list-item`(
+        contentArea: {
+          variant: "label+bigLabel",
+          label: "Nome",
+          bigLabel: temp.nomeCompleto
+        }
+      )
+      
+      blocks.`list-item`(
+        contentArea: {
+          variant: "label+bigLabel",
+          label: "CPF",
+          bigLabel: temp.cpf
+        }
+      )
+      
+      blocks.`list-item`(
+        contentArea: {
+          variant: "label+bigLabel",
+          label: "Telefone",
+          bigLabel: temp.telefone
+        }
+      )
+      
+      blocks.`list-item`(
+        contentArea: {
+          variant: "label+bigLabel",
+          label: "Email",
+          bigLabel: temp.email
+        }
+      )
+      
+      blocks.spacer(my: "xl")
+      
+      blocks.`button-bundle`(
+        primary: {
+          children: "Finalizar cadastro",
+          showIcon: false,
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "sucesso"
+              }
+            )
+          }
+        },
+        tertiary: {
+          children: "Editar dados",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "dados-pessoais"
+              }
+            )
+          }
+        }
+      )
+    }
+  }
+  
+  step(
+    hid: "sucesso",
+    navType: "push"
+  ) {
+    templates.`success-image`(
+      navbar: {
+        trailingIconButton: {
+          accessibilityLabel: "Fechar",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      },
+      imageUrl: "https://cdn.ppay.me/assets/images/success_basic.png",
+      title: {
+        title: "Parabéns!",
+        subtitle: "Seu cadastro foi concluído com sucesso. Agora você pode solicitar seu empréstimo."
+      },
+      sectionTitle: {
+        title: "Status"
+      },
+      list: {
+        data: [
+          {
+            contentArea: {
+              variant: "plus+label",
+              label: "Situação",
+              plus: "Cadastro concluído"
+            }
+          }
+        ]
+      },
+      actions: {
+        primary: {
+          children: "Solicitar empréstimo",
+          onPress => {
+            log.info(
+              msg: ["Cadastro finalizado com sucesso"],
+              name: "CADASTRO_SUCESSO"
+            )
+          }
+        }
+      }
+    )
+  }
+  
+  step(
+    hid: "login-existente",
+    navType: "push"
+  ) {
+    templates.`input-text-template`(
+      preset: "normal",
+      navbar: {
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        },
+        title: "Login"
+      },
+      title: {
+        title: "Digite seu CPF",
+        description: "Informe o CPF cadastrado anteriormente"
+      },
+      input: {
+        placeholder: "000.000.000-00",
+        mask: "cpf",
+        onChangeText => {
+          hit.set() -> (
+            temp.loginCpf: fn.event.text
+          )
+        }
+      },
+      actions: {
+        primary: {
+          children: "Entrar",
+          showIcon: false,
+          onPress => {
+            log.info(
+              msg: ["Tentativa de login com CPF existente"],
+              name: "LOGIN_EXISTENTE"
+            )
+          }
+        }
+      }
+    )
+  }
+}

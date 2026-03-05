@@ -1,0 +1,3 @@
+hit:
+  name: "promocao-produtos-pagamento"
+  entrypoint: "main.hit"

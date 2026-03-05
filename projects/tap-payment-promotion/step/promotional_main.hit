@@ -1,0 +1,212 @@
+step(
+  hid: "promotional-main",
+  navType: "push"
+) {
+  blocks.box(width: "100%", height: "100%") {
+    blocks.`nav-bar`(
+      title: "Nossas Soluções",
+      leadingIconButton: {
+        accessibilityLabel: "Voltar",
+        onPress => { navigation.goBack() }
+      }
+    )
+
+    blocks.scroll(mx: "md", showsVerticalScrollIndicator: false) {
+      blocks.flex(flexDirection: "column", py: "md", pb: "xl") {
+        blocks.text(
+          children: "Escolha a melhor forma de vender",
+          fontSize: "lg",
+          fontWeight: "bold",
+          mb: "sm",
+          textAlign: "center",
+          color: "colibri.content.a"
+        )
+
+        blocks.text(
+          children: "Ambas as soluções permitem que você expanda seu negócio com segurança",
+          fontSize: "sm",
+          textAlign: "center",
+          color: "colibri.content.c",
+          mb: "xl"
+        )
+
+        blocks.flex(flexDirection: "row", gap: "md", mb: "md") {
+          blocks.flex(
+            flex: 1,
+            flexDirection: "column",
+            backgroundColor: "colibri.background.b",
+            borderRadius: "lg",
+            padding: "lg",
+            borderWidth: 2,
+            borderColor: "colibri.brand.a"
+          ) {
+            blocks.flex(
+              width: "100%",
+              height: "md",
+              backgroundColor: "colibri.brand.a",
+              borderRadius: "md",
+              justifyContent: "center",
+              alignItems: "center",
+              mb: "md",
+              opacity: 0.1
+            ) {
+              blocks.icon(name: "pp_ic_contacless", size: "medium", color: "colibri.brand.d")
+            }
+
+            blocks.text(
+              children: "Tap On Phone",
+              fontSize: "md",
+              fontWeight: "bold",
+              mb: "xs",
+              color: "colibri.content.a"
+            )
+
+            blocks.text(
+              children: "Venda física através de NFC",
+              fontSize: "2xs",
+              color: "colibri.content.c",
+              mb: "md"
+            )
+
+            blocks.flex(flexDirection: "column", gap: "2xs", mb: "md") {
+              blocks.flex(flexDirection: "row", alignItems: "center", gap: "xs") {
+                blocks.icon(name: "pp_ic_checkmark", size: "small", color: "colibri.feedback.success.c")
+                blocks.text(children: "Presencial com NFC", fontSize: "2xs", color: "colibri.content.b")
+              }
+
+              blocks.flex(flexDirection: "row", alignItems: "center", gap: "xs") {
+                blocks.icon(name: "pp_ic_checkmark", size: "small", color: "colibri.feedback.success.c")
+                blocks.text(children: "Pelo seu telefone", fontSize: "2xs", color: "colibri.content.b")
+              }
+
+              blocks.flex(flexDirection: "row", alignItems: "center", gap: "xs") {
+                blocks.icon(name: "pp_ic_checkmark", size: "small", color: "colibri.feedback.success.c")
+                blocks.text(children: "Mobilidade total", fontSize: "2xs", color: "colibri.content.b")
+              }
+            }
+
+            blocks.`button-item`(
+              children: "Saiba mais",
+              variant: "neutral.secondary",
+              onPress => {
+                log.info(name: "TAP_ON_PHONE", msg: ["Tap On Phone product selected"])
+              }
+            )
+          }
+
+          blocks.flex(
+            flex: 1,
+            flexDirection: "column",
+            backgroundColor: "colibri.background.b",
+            borderRadius: "lg",
+            padding: "lg",
+            borderWidth: 2,
+            borderColor: "colibri.feedback.success.a"
+          ) {
+            blocks.flex(
+              width: "100%",
+              height: "md",
+              backgroundColor: "colibri.feedback.success.a",
+              borderRadius: "md",
+              justifyContent: "center",
+              alignItems: "center",
+              mb: "md",
+              opacity: 0.1
+            ) {
+              blocks.icon(name: "pp_ic_arrowForward", size: "medium", color: "colibri.feedback.success.c")
+            }
+
+            blocks.text(
+              children: "Link de Pagamento",
+              fontSize: "md",
+              fontWeight: "bold",
+              mb: "xs",
+              color: "colibri.content.a"
+            )
+
+            blocks.text(
+              children: "Venda digital através de links",
+              fontSize: "2xs",
+              color: "colibri.content.c",
+              mb: "md"
+            )
+
+            blocks.flex(flexDirection: "column", gap: "2xs", mb: "md") {
+              blocks.flex(flexDirection: "row", alignItems: "center", gap: "xs") {
+                blocks.icon(name: "pp_ic_checkmark", size: "small", color: "colibri.feedback.success.c")
+                blocks.text(children: "Venda online", fontSize: "2xs", color: "colibri.content.b")
+              }
+
+              blocks.flex(flexDirection: "row", alignItems: "center", gap: "xs") {
+                blocks.icon(name: "pp_ic_checkmark", size: "small", color: "colibri.feedback.success.c")
+                blocks.text(children: "Compartilhe URLs", fontSize: "2xs", color: "colibri.content.b")
+              }
+
+              blocks.flex(flexDirection: "row", alignItems: "center", gap: "xs") {
+                blocks.icon(name: "pp_ic_checkmark", size: "small", color: "colibri.feedback.success.c")
+                blocks.text(children: "Sem limites geográficos", fontSize: "2xs", color: "colibri.content.b")
+              }
+            }
+
+            blocks.`button-item`(
+              children: "Saiba mais",
+              variant: "neutral.secondary",
+              onPress => {
+                log.info(name: "LINK_PAGAMENTO", msg: ["Link de Pagamento product selected"])
+              }
+            )
+          }
+        }
+
+        blocks.box(
+          width: "100%",
+          backgroundColor: "colibri.highlight.a",
+          borderRadius: "lg",
+          padding: "lg",
+          mt: "xl",
+          mb: "lg"
+        ) {
+          blocks.text(
+            children: "Por que escolher entre uma ou outra?",
+            fontSize: "sm",
+            fontWeight: "bold",
+            mb: "xs",
+            color: "colibri.highlight.b"
+          )
+          blocks.text(
+            children: "Ambas as soluções são complementares e permitem que você diversifique suas formas de recebimento. Ative as duas para maximizar suas vendas!",
+            fontSize: "2xs",
+            color: "colibri.highlight.b"
+          )
+        }
+
+        blocks.flex(mt: "lg", mb: "md") {
+          blocks.`button-bundle`(
+            primary: {
+              children: "Ativar Tap On Phone",
+              onPress => {
+                log.info(name: "ACTIVATE_TAP", msg: ["User activated Tap On Phone"])
+              }
+            },
+            secondary: {
+              children: "Ativar Link",
+              onPress => {
+                log.info(name: "ACTIVATE_LINK", msg: ["User activated Link de Pagamento"])
+              }
+            }
+          )
+        }
+
+        blocks.flex(mb: "lg") {
+          blocks.`button-item`(
+            children: "Explorar ambas",
+            variant: "neutral.tertiary",
+            onPress => {
+              log.info(name: "EXPLORE_BOTH", msg: ["User wants to explore both products"])
+            }
+          )
+        }
+      }
+    }
+  }
+}

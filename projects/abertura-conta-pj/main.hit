@@ -1,0 +1,478 @@
+hit(
+  id: "abertura-conta-pj",
+  name: "abertura-conta-pj",
+  scope: "banking"
+) {
+  step(
+    hid: "onboarding-beneficios",
+    navType: "push"
+  ) {
+    templates.`product-onboarding`(
+      variant: "normal",
+      navbar: {
+        progressBar: { 
+          value: 10,
+          accessibilityLabel: "Progresso: 10% concluído" 
+        },
+        title: "Abertura Conta PJ",
+        trailingIconButton: {
+          accessibilityLabel: "Fechar",
+          onPress => {
+            navigation.finish()
+          }
+        }
+      },
+      title: "Conta Digital PJ - Benefícios Exclusivos",
+      subtitle: "Sua empresa com mais facilidade e vantagens",
+      image: "https://cdn.ppay.me/assets/images/img4.png",
+      list: {
+        data: [
+          { label: "Taxa zero para manutenção da conta" },
+          { label: "PIX ilimitado sem custos adicionais" },
+          { label: "Cartão empresarial com cashback" },
+          { label: "Gestão financeira completa online" },
+          { label: "Suporte dedicado para empresas" }
+        ],
+        renderItem: render<blocks.text>(
+          children: item.label
+        )
+      },
+      actions: {
+        primary: {
+          children: "Iniciar Cadastro",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "dados-empresa"
+              }
+            )
+          }
+        },
+        tertiary: {
+          children: "Saiba mais",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "mais-informacoes"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "dados-empresa",
+    navType: "push"
+  ) {
+    templates.`input-text-template`(
+      preset: "normal",
+      navbar: {
+        progressBar: { 
+          value: 25,
+          accessibilityLabel: "Progresso: 25% concluído" 
+        },
+        title: "Dados da Empresa",
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      },
+      title: {
+        title: "CNPJ da sua empresa",
+        description: "Digite o CNPJ para buscarmos os dados da sua empresa automaticamente"
+      },
+      input: {
+        placeholder: "00.000.000/0000-00",
+        mask: "cnpj",
+        onChangeText => {
+          hit.set() -> (
+            temp.cnpj: fn.event.value
+          )
+        }
+      },
+      actions: {
+        primary: {
+          children: "Buscar Dados",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "confirmar-dados-empresa"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "confirmar-dados-empresa",
+    navType: "push"
+  ) {
+    templates.`input-text-template`(
+      preset: "normal",
+      navbar: {
+        progressBar: { 
+          value: 40,
+          accessibilityLabel: "Progresso: 40% concluído" 
+        },
+        title: "Confirmar Dados",
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      },
+      title: {
+        title: "Razão Social",
+        description: "Confirme ou corrija a razão social da sua empresa"
+      },
+      input: {
+        placeholder: "Nome da empresa LTDA",
+        onChangeText => {
+          hit.set() -> (
+            temp.razao_social: fn.event.value
+          )
+        }
+      },
+      actions: {
+        primary: {
+          children: "Continuar",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "endereco-empresa"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "endereco-empresa",
+    navType: "push"
+  ) {
+    templates.`input-text-template`(
+      preset: "normal",
+      navbar: {
+        progressBar: { 
+          value: 55,
+          accessibilityLabel: "Progresso: 55% concluído" 
+        },
+        title: "Endereço da Empresa",
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      },
+      title: {
+        title: "CEP do endereço",
+        description: "Digite o CEP para buscarmos o endereço automaticamente"
+      },
+      input: {
+        placeholder: "00000-000",
+        mask: "cep",
+        onChangeText => {
+          hit.set() -> (
+            temp.cep: fn.event.value
+          )
+        }
+      },
+      actions: {
+        primary: {
+          children: "Buscar Endereço",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "dados-responsavel"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "dados-responsavel",
+    navType: "push"
+  ) {
+    templates.`input-text-template`(
+      preset: "normal",
+      navbar: {
+        progressBar: { 
+          value: 70,
+          accessibilityLabel: "Progresso: 70% concluído" 
+        },
+        title: "Responsável Legal",
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      },
+      title: {
+        title: "CPF do responsável legal",
+        description: "Digite o CPF da pessoa responsável pela empresa"
+      },
+      input: {
+        placeholder: "000.000.000-00",
+        mask: "cpf",
+        onChangeText => {
+          hit.set() -> (
+            temp.cpf_responsavel: fn.event.value
+          )
+        }
+      },
+      actions: {
+        primary: {
+          children: "Continuar",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "nome-responsavel"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "nome-responsavel",
+    navType: "push"
+  ) {
+    templates.`input-text-template`(
+      preset: "normal",
+      navbar: {
+        progressBar: { 
+          value: 85,
+          accessibilityLabel: "Progresso: 85% concluído" 
+        },
+        title: "Nome Completo",
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      },
+      title: {
+        title: "Nome completo do responsável",
+        description: "Digite o nome completo conforme documento de identificação"
+      },
+      input: {
+        placeholder: "Nome completo",
+        onChangeText => {
+          hit.set() -> (
+            temp.nome_responsavel: fn.event.value
+          )
+        }
+      },
+      actions: {
+        primary: {
+          children: "Finalizar",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "resumo-cadastro"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "resumo-cadastro",
+    navType: "push"
+  ) {
+    templates.`product-onboarding`(
+      variant: "normal",
+      navbar: {
+        progressBar: { 
+          value: 100,
+          accessibilityLabel: "Progresso: 100% concluído" 
+        },
+        title: "Resumo do Cadastro"
+      },
+      title: "Cadastro Realizado com Sucesso!",
+      subtitle: "Seus dados foram enviados para análise. Em breve você receberá um e-mail com as próximas etapas.",
+      image: "https://cdn.ppay.me/assets/images/success.png",
+      list: {
+        data: [
+          { label: "Análise de crédito em até 24 horas" },
+          { label: "Documentos enviados por e-mail" },
+          { label: "Conta ativa em até 48 horas úteis" },
+          { label: "Cartão físico enviado em 7 dias úteis" }
+        ],
+        renderItem: render<blocks.text>(
+          children: item.label
+        )
+      },
+      actions: {
+        primary: {
+          children: "Concluir",
+          onPress => {
+            navigation.finish()
+          }
+        },
+        tertiary: {
+          children: "Acompanhar Status",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "acompanhar-status"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "mais-informacoes",
+    navType: "push"
+  ) {
+    templates.`product-onboarding`(
+      variant: "normal",
+      navbar: {
+        title: "Mais Informações",
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      },
+      title: "Conta Digital PJ - Detalhes",
+      subtitle: "Conheça todos os benefícios e funcionalidades",
+      image: "https://cdn.ppay.me/assets/images/img4.png",
+      list: {
+        data: [
+          { label: "Abertura de conta 100% digital" },
+          { label: "Sem taxa de manutenção mensal" },
+          { label: "PIX ilimitado gratuito" },
+          { label: "TED e DOC com taxas reduzidas" },
+          { label: "Cartão de débito sem anuidade" },
+          { label: "Limite de crédito pré-aprovado" },
+          { label: "App exclusivo para gestão empresarial" },
+          { label: "Relatórios financeiros automatizados" },
+          { label: "Integração com sistemas contábeis" },
+          { label: "Suporte especializado 24/7" }
+        ],
+        renderItem: render<blocks.text>(
+          children: item.label
+        )
+      },
+      actions: {
+        primary: {
+          children: "Iniciar Cadastro",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "dados-empresa"
+              }
+            )
+          }
+        },
+        tertiary: {
+          children: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "acompanhar-status",
+    navType: "push"
+  ) {
+    templates.`product-onboarding`(
+      variant: "normal",
+      navbar: {
+        title: "Status do Cadastro",
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        }
+      },
+      title: "Acompanhe seu Cadastro",
+      subtitle: "Você receberá atualizações por e-mail e SMS",
+      image: "https://cdn.ppay.me/assets/images/tracking.png",
+      list: {
+        data: [
+          { label: "✅ Dados recebidos e em análise" },
+          { label: "⏳ Verificação documental em andamento" },
+          { label: "⏳ Análise de crédito pendente" },
+          { label: "⏳ Aprovação final aguardando" },
+          { label: "⏳ Conta digital a ser ativada" }
+        ],
+        renderItem: render<blocks.text>(
+          children: item.label
+        )
+      },
+      actions: {
+        primary: {
+          children: "Atualizar Status",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "acompanhar-status"
+              }
+            )
+          }
+        },
+        tertiary: {
+          children: "Voltar ao Início",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "onboarding-beneficios"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+}

@@ -1,0 +1,3 @@
+hit:
+  name: 'fluxo-investimento-guiado'
+  entrypoint: 'main.hit'

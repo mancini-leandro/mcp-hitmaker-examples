@@ -1,0 +1,7 @@
+hit(
+  id: "tap-payment-promotion",
+  name: "tap-payment-promotion",
+  scope: "payments"
+) {
+  #include step.promotional_main
+}

@@ -1,0 +1,457 @@
+hit(
+  id: "plano-saude-pets",
+  name: "plano-saude-pets",
+  scope: "pet-health"
+) {
+  step(
+    hid: "selecao-plano",
+    navType: "push"
+  ) {
+    templates.`shape-list-single-select-template`(
+      navbar: {
+        progressBar: {
+          value: 25,
+          accessibilityLabel: "Progresso 25% - Seleção do plano"
+        },
+        title: "Plano de Saúde Pet"
+      },
+      title: {
+        title: "Escolha o plano ideal",
+        description: "Selecione o plano que melhor atende às necessidades do seu pet"
+      },
+      list: {
+        data: [
+          { id: "basico", nome: "Básico", preco: "R$ 29,90/mês", descricao: "Consultas e vacinas essenciais" },
+          { id: "completo", nome: "Completo", preco: "R$ 49,90/mês", descricao: "Consultas, exames e cirurgias" },
+          { id: "premium", nome: "Premium", preco: "R$ 89,90/mês", descricao: "Cobertura total com emergência 24h" }
+        ],
+        onPress => {
+          hit.set() -> (
+            temp.planoSelecionado: fn.event.item
+          )
+        },
+        renderItem: render<templates.`shape-list-single-select-template-item`>(
+          contentArea: {
+            variant: "label+bigLabel+plus",
+            label: item.nome,
+            bigLabel: item.preco,
+            plus: item.descricao
+          }
+        )
+      },
+      actions: {
+        primary: {
+          children: "Continuar",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "categoria-pet"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "categoria-pet",
+    navType: "push"
+  ) {
+    templates.`shape-list-single-select-template`(
+      navbar: {
+        progressBar: {
+          value: 50,
+          accessibilityLabel: "Progresso 50% - Categoria do pet"
+        },
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        },
+        title: "Categoria do Pet"
+      },
+      title: {
+        title: "Qual tipo de pet você tem?",
+        description: "Selecione a categoria do seu animal de estimação"
+      },
+      list: {
+        data: [
+          { id: "cao", nome: "Cão", icone: "🐕", info: "Cães de todos os portes e idades" },
+          { id: "gato", nome: "Gato", icone: "🐱", info: "Felinos domésticos" },
+          { id: "ave", nome: "Ave", icone: "🦜", info: "Pássaros e aves domésticas" },
+          { id: "roedor", nome: "Roedor", icone: "🐹", info: "Hamsters, coelhos e similares" },
+          { id: "reptil", nome: "Réptil", icone: "🦎", info: "Iguanas, tartarugas e outros" }
+        ],
+        onPress => {
+          hit.set() -> (
+            temp.categoriaPet: fn.event.item
+          )
+        },
+        renderItem: render<templates.`shape-list-single-select-template-item`>(
+          contentArea: {
+            variant: "label+plus",
+            label: item.nome,
+            plus: item.info
+          }
+        )
+      },
+      actions: {
+        primary: {
+          children: "Próximo",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "dados-pet"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "dados-pet",
+    navType: "push"
+  ) {
+    templates.`input-text-template`(
+      preset: "normal",
+      navbar: {
+        progressBar: {
+          value: 75,
+          accessibilityLabel: "Progresso 75% - Dados do pet"
+        },
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        },
+        title: "Dados do Pet"
+      },
+      title: {
+        title: "Nome do seu pet"
+      },
+      input: {
+        placeholder: "Digite o nome do pet",
+        onChangeText => {
+          hit.set() -> (
+            temp.nomePet: fn.event
+          )
+        }
+      },
+      actions: {
+        primary: {
+          children: "Próximo",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "idade-pet"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "idade-pet",
+    navType: "push"
+  ) {
+    templates.`input-text-template`(
+      preset: "normal",
+      navbar: {
+        progressBar: {
+          value: 80,
+          accessibilityLabel: "Progresso 80% - Idade do pet"
+        },
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        },
+        title: "Idade do Pet"
+      },
+      title: {
+        title: "Qual a idade do seu pet?"
+      },
+      input: {
+        placeholder: "Digite a idade em anos",
+        mask: "numeric",
+        onChangeText => {
+          hit.set() -> (
+            temp.idadePet: fn.event
+          )
+        }
+      },
+      actions: {
+        primary: {
+          children: "Próximo",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "raca-pet"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "raca-pet",
+    navType: "push"
+  ) {
+    templates.`input-text-template`(
+      preset: "normal",
+      navbar: {
+        progressBar: {
+          value: 85,
+          accessibilityLabel: "Progresso 85% - Raça do pet"
+        },
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        },
+        title: "Raça do Pet"
+      },
+      title: {
+        title: "Qual a raça do seu pet?"
+      },
+      input: {
+        placeholder: "Digite a raça do pet",
+        onChangeText => {
+          hit.set() -> (
+            temp.racaPet: fn.event
+          )
+        }
+      },
+      actions: {
+        primary: {
+          children: "Próximo",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "castrado-pet"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "castrado-pet",
+    navType: "push"
+  ) {
+    templates.`shape-list-single-select-template`(
+      navbar: {
+        progressBar: {
+          value: 90,
+          accessibilityLabel: "Progresso 90% - Status de castração"
+        },
+        leadingIconButton: {
+          accessibilityLabel: "Voltar",
+          onPress => {
+            navigation.goBack()
+          }
+        },
+        title: "Status de Castração"
+      },
+      title: {
+        title: "O pet é castrado?",
+        description: "Esta informação é importante para calcular o valor do plano"
+      },
+      list: {
+        data: [
+          { id: "sim", resposta: "Sim", descricao: "Pet castrado - desconto aplicado" },
+          { id: "nao", resposta: "Não", descricao: "Pet não castrado" },
+          { id: "agendado", resposta: "Castração agendada", descricao: "Procedimento será realizado em breve" }
+        ],
+        onPress => {
+          hit.set() -> (
+            temp.statusCastracao: fn.event.item
+          )
+        },
+        renderItem: render<templates.`shape-list-single-select-template-item`>(
+          contentArea: {
+            variant: "label+plus",
+            label: item.resposta,
+            plus: item.descricao
+          }
+        )
+      },
+      actions: {
+        primary: {
+          children: "Finalizar Cadastro",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "resumo-cadastro"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+
+  step(
+    hid: "resumo-cadastro",
+    navType: "push"
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%",
+      px: "sm"
+    ) {
+      blocks.`nav-progress-bar`(
+        value: 100,
+        accessibilityLabel: "Progresso 100% - Resumo do cadastro"
+      )
+
+      blocks.spacer(height: "lg")
+
+      blocks.text(
+        children: "Parabéns! 🎉",
+        variant: "large.medium"
+      )
+
+      blocks.text(
+        children: "Seu plano de saúde pet foi configurado com sucesso",
+        variant: "medium.regular",
+        color: "colibri.content.b"
+      )
+
+      blocks.spacer(height: "lg")
+
+      blocks.box(
+        borderRadius: "md",
+        backgroundColor: "colibri.background.b",
+        padding: "md"
+      ) {
+        blocks.text(
+          children: "Plano Selecionado",
+          variant: "medium.medium"
+        )
+        
+        blocks.text(
+          children: "Pet Cadastrado com sucesso!",
+          variant: "small.regular",
+          color: "colibri.content.b"
+        )
+
+        blocks.spacer(height: "sm")
+
+        blocks.text(
+          children: "Dados salvos",
+          variant: "medium.medium"
+        )
+        
+        blocks.text(
+          children: "Informações do pet registradas",
+          variant: "small.regular"
+        )
+      }
+
+      blocks.spacer(height: "xl")
+
+      blocks.`button-flex`(
+        children: "Contratar Plano",
+        onPress => {
+          hit.set() -> (
+            temp.cadastroCompleto: true
+          )
+          navigation.push(
+            path: "hitmaker",
+            params: {
+              hitId: hit.id,
+              stepId: "sucesso-cadastro"
+            }
+          )
+        }
+      )
+
+      blocks.spacer(height: "md")
+
+      blocks.`button-flex`(
+        children: "Voltar ao Início",
+        variant: "secondary.normal",
+        onPress => {
+          navigation.push(
+            path: "hitmaker",
+            params: {
+              hitId: hit.id,
+              stepId: "selecao-plano"
+            }
+          )
+        }
+      )
+    }
+  }
+
+  step(
+    hid: "sucesso-cadastro",
+    navType: "push"
+  ) {
+    templates.`hint-template`(
+      preset: "generic",
+      loading: false,
+      navbar: {
+        trailingIconButton: {
+          accessibilityLabel: "Fechar",
+          onPress => {
+            navigation.finish()
+          }
+        }
+      },
+      hint: {
+        variant: "normal",
+        icon: "apl3_ic_check",
+        title: "Pet cadastrado com sucesso! 🎉",
+        description: "Seu pet foi registrado no plano de saúde e já pode usufruir dos benefícios. Você receberá todas as informações por email."
+      },
+      actions: {
+        primary: {
+          children: "Finalizar",
+          showIcon: false,
+          onPress => {
+            navigation.finish()
+          }
+        },
+        tertiary: {
+          children: "Voltar ao Início",
+          onPress => {
+            navigation.push(
+              path: "hitmaker",
+              params: {
+                hitId: hit.id,
+                stepId: "selecao-plano"
+              }
+            )
+          }
+        }
+      }
+    )
+  }
+}

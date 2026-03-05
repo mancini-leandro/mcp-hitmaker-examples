@@ -1,0 +1,147 @@
+hit(
+  id: "selecao-formas-pagamento",
+  name: "selecao-formas-pagamento",
+  scope: "pagamento"
+) {
+  step(
+    hid: "main",
+    navType: "push"
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%",
+    ) {
+      blocks.`icon-button`(
+        accessibilityLabel: "Voltar",
+        icon: "apl3_ic_arrow_left",
+        onPress => {
+          navigation.goBack()
+        }
+      )
+      
+      blocks.spacer(height: 24)
+      
+      blocks.title(
+        title: "Escolha até 2 formas de pagamento",
+        variant: "normal"
+      )
+      
+      blocks.spacer(height: 8)
+      
+      blocks.text(
+        children: "Valor R$ 7.513,00",
+        color: "colibri.content.c"
+      )
+      
+      blocks.spacer(height: 32)
+      
+      blocks.`shape-list-multi-select-bundle`(
+        data: [
+          {
+            id: "saldo",
+            title: "Saldo da conta",
+            subtitle: "Disponível R$ 8.800,00",
+            badge: "5% CASHBACK"
+          },
+          {
+            id: "credito",
+            title: "Cartão de crédito",
+            subtitle: "Disponíveis 2 cartões",
+            badge: "10X S/JUROS PICPAY CARD"
+          },
+          {
+            id: "parcelado",
+            title: "Parcelado sem cartão",
+            subtitle: "Limite pré-aprovado R$ 8.000,00",
+            description: "Sujeito a análise",
+            badge: "36X SEM CARTÃO"
+          }
+        ],
+        elementAction: "checkbox",
+        onPress => {
+          hit.set() -> (
+            temp.selectedPaymentMethods: fn.event.selectedItems
+          )
+        },
+        renderItem: render<blocks.`shape-list-multi-select-bundle-item`>(
+          contentArea: {
+            variant: "label+bigLabel+plus",
+            label: item.title,
+            bigLabel: item.subtitle,
+            plus: item.description
+          }
+        )
+      )
+      
+      blocks.spacer(height: 40)
+      
+      blocks.button(
+        children: "Continuar",
+        variant: "primary",
+        fillMaxWidth: true,
+        onPress => {
+          navigation.push(
+            path: "hitmaker",
+            params: {
+              hitId: hit.id,
+              stepId: "confirmacao"
+            }
+          )
+        }
+      )
+      
+      blocks.spacer(height: 20)
+    }
+  }
+  
+  step(
+    hid: "confirmacao",
+    navType: "push"
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%",
+      px: "md"
+    ) {
+      blocks.`icon-button`(
+        accessibilityLabel: "Voltar",
+        icon: "apl3_ic_arrow_left",
+        onPress => {
+          navigation.goBack()
+        }
+      )
+      
+      blocks.spacer(height: 24)
+      
+      blocks.title(
+        title: "Confirmação",
+        variant: "normal"
+      )
+      
+      blocks.spacer(height: 32)
+      
+      blocks.text(
+        children: "Formas de pagamento selecionadas:",
+        color: "colibri.content.a"
+      )
+      
+      blocks.spacer(height: 16)
+      
+      blocks.text(
+        children: "Métodos selecionados serão mostrados aqui",
+        color: "colibri.content.b"
+      )
+      
+      blocks.spacer(height: 40)
+      
+      blocks.button(
+        children: "Finalizar",
+        variant: "primary",
+        fillMaxWidth: true,
+        onPress => {
+          navigation.finish()
+        }
+      )
+    }
+  }
+}

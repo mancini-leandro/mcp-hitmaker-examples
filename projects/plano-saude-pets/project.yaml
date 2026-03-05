@@ -1,0 +1,3 @@
+hit:
+  name: "plano-saude-pets"
+  entrypoint: "main.hit"

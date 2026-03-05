@@ -1,0 +1,3 @@
+hit:
+  name: "selecao-formas-pagamento"
+  entrypoint: "main.hit"
