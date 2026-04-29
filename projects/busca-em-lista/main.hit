@@ -5,7 +5,29 @@ hit(
 ) {
   step(
     hid: "main",
-    navType: "push"
+    navType: "push",
+    lifecycle: {
+      onCreate => {
+        hit.set() -> (
+          temp.listaBancosCompleta: [
+            { id: "1", nome: "Nubank", descricao: "Banco digital" },
+            { id: "2", nome: "Itaú Unibanco", descricao: "Banco privado" },
+            { id: "3", nome: "Bradesco", descricao: "Banco privado" },
+            { id: "4", nome: "Banco do Brasil", descricao: "Banco público" },
+            { id: "5", nome: "Santander", descricao: "Banco multinacional" },
+            { id: "6", nome: "Caixa Econômica Federal", descricao: "Banco público" },
+            { id: "7", nome: "Inter", descricao: "Banco digital" },
+            { id: "8", nome: "C6 Bank", descricao: "Banco digital" },
+            { id: "9", nome: "PicPay", descricao: "Banco digital" },
+            { id: "10", nome: "Sicoob", descricao: "Cooperativa de crédito" }
+          ]
+        )
+
+        hit.set() -> (
+          listaBancos.data: temp.listaBancosCompleta
+        )
+      }
+    }
   ) {
     blocks.scroll(
       width: "100%",
@@ -42,18 +64,7 @@ hit(
             delay: 300
           ) {
             hit.find(
-              value: [
-                { id: "1", nome: "Nubank", descricao: "Banco digital" },
-                { id: "2", nome: "Itaú Unibanco", descricao: "Banco privado" },
-                { id: "3", nome: "Bradesco", descricao: "Banco privado" },
-                { id: "4", nome: "Banco do Brasil", descricao: "Banco público" },
-                { id: "5", nome: "Santander", descricao: "Banco multinacional" },
-                { id: "6", nome: "Caixa Econômica Federal", descricao: "Banco público" },
-                { id: "7", nome: "Inter", descricao: "Banco digital" },
-                { id: "8", nome: "C6 Bank", descricao: "Banco digital" },
-                { id: "9", nome: "PicPay", descricao: "Banco digital" },
-                { id: "10", nome: "Sicoob", descricao: "Cooperativa de crédito" }
-              ],
+              value: temp.listaBancosCompleta,
               where: element.nome match `/${temp.termoBusca}/i`
             ) -> (
               listaBancos.data: fn.result
@@ -68,18 +79,7 @@ hit(
         hid: "listaBancos",
         trackBy: "id",
         disableFastRender: true,
-        data: [
-          { id: "1", nome: "Nubank", descricao: "Banco digital" },
-          { id: "2", nome: "Itaú Unibanco", descricao: "Banco privado" },
-          { id: "3", nome: "Bradesco", descricao: "Banco privado" },
-          { id: "4", nome: "Banco do Brasil", descricao: "Banco público" },
-          { id: "5", nome: "Santander", descricao: "Banco multinacional" },
-          { id: "6", nome: "Caixa Econômica Federal", descricao: "Banco público" },
-          { id: "7", nome: "Inter", descricao: "Banco digital" },
-          { id: "8", nome: "C6 Bank", descricao: "Banco digital" },
-          { id: "9", nome: "PicPay", descricao: "Banco digital" },
-          { id: "10", nome: "Sicoob", descricao: "Cooperativa de crédito" }
-        ],
+        data: [],
         renderItem: render<blocks.`list-item`>(
           contentArea: {
             variant: "label+plus",
