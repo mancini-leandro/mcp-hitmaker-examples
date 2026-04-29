@@ -1,0 +1,3 @@
+hit:
+  name: "filtrar-por-status"
+  entrypoint: "main.hit"
