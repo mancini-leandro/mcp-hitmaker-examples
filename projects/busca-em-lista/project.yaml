@@ -1,0 +1,3 @@
+hit:
+  name: "busca-em-lista"
+  entrypoint: "main.hit"

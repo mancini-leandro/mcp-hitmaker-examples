@@ -1,0 +1,94 @@
+hit(
+  id: "busca-em-lista",
+  name: "busca-em-lista",
+  scope: "demo"
+) {
+  step(
+    hid: "main",
+    navType: "push"
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%"
+    ) {
+      blocks.`icon-button`(
+        accessibilityLabel: "Voltar",
+        icon: "apl3_ic_arrow_left",
+        onPress => {
+          navigation.goBack()
+        }
+      )
+
+      blocks.spacer(height: 16)
+
+      blocks.title(
+        title: "Selecionar banco",
+        variant: "normal"
+      )
+
+      blocks.spacer(height: 8)
+
+      blocks.`search-bar`(
+        placeholder: "Buscar banco...",
+        ml: 16,
+        mr: 16,
+        onChangeText => {
+          hit.set() -> (
+            temp.termoBusca: fn.event
+          )
+
+          hit.debounce(
+            id: "buscaDebounce",
+            delay: 300
+          ) {
+            hit.find(
+              value: [
+                { id: "1", nome: "Nubank", descricao: "Banco digital" },
+                { id: "2", nome: "Itaú Unibanco", descricao: "Banco privado" },
+                { id: "3", nome: "Bradesco", descricao: "Banco privado" },
+                { id: "4", nome: "Banco do Brasil", descricao: "Banco público" },
+                { id: "5", nome: "Santander", descricao: "Banco multinacional" },
+                { id: "6", nome: "Caixa Econômica Federal", descricao: "Banco público" },
+                { id: "7", nome: "Inter", descricao: "Banco digital" },
+                { id: "8", nome: "C6 Bank", descricao: "Banco digital" },
+                { id: "9", nome: "PicPay", descricao: "Banco digital" },
+                { id: "10", nome: "Sicoob", descricao: "Cooperativa de crédito" }
+              ],
+              where: element.nome match `/${temp.termoBusca}/i`
+            ) -> (
+              listaBancos.data: fn.result
+            )
+          }
+        }
+      )
+
+      blocks.spacer(height: 8)
+
+      blocks.list(
+        hid: "listaBancos",
+        trackBy: "id",
+        disableFastRender: true,
+        data: [
+          { id: "1", nome: "Nubank", descricao: "Banco digital" },
+          { id: "2", nome: "Itaú Unibanco", descricao: "Banco privado" },
+          { id: "3", nome: "Bradesco", descricao: "Banco privado" },
+          { id: "4", nome: "Banco do Brasil", descricao: "Banco público" },
+          { id: "5", nome: "Santander", descricao: "Banco multinacional" },
+          { id: "6", nome: "Caixa Econômica Federal", descricao: "Banco público" },
+          { id: "7", nome: "Inter", descricao: "Banco digital" },
+          { id: "8", nome: "C6 Bank", descricao: "Banco digital" },
+          { id: "9", nome: "PicPay", descricao: "Banco digital" },
+          { id: "10", nome: "Sicoob", descricao: "Cooperativa de crédito" }
+        ],
+        renderItem: render<blocks.`list-item`>(
+          contentArea: {
+            variant: "label+plus",
+            label: item.nome,
+            plus: item.descricao
+          },
+          elementAction: { type: "icon", icon: "apl3_ic_chevron_right" }
+        )
+      )
+    }
+  }
+}
