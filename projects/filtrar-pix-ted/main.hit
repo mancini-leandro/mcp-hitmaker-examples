@@ -1,0 +1,77 @@
+hit(
+  id: "filtrar-pix-ted",
+  name: "filtrar-pix-ted",
+  scope: "demo"
+) {
+  step(
+    hid: "main",
+    navType: "push",
+    lifecycle: {
+      onCreate => {
+        hit.set() -> (
+          temp.listaCompleta: [
+            { id: "1", descricao: "Pagamento Nubank", type: "pix" },
+            { id: "2", descricao: "Transferência Itaú", type: "ted" },
+            { id: "3", descricao: "Boleto vencimento", type: "boleto" },
+            { id: "4", descricao: "Pagamento Inter", type: "pix" },
+            { id: "5", descricao: "Transferência BB", type: "ted" }
+          ]
+        )
+  
+        hit.set() -> (
+          listaTransacoes.data: temp.listaCompleta
+        )
+      }
+    }
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%"
+    ) {
+      blocks.`icon-button`(
+        accessibilityLabel: "Voltar",
+        icon: "apl3_ic_arrow_left",
+        onPress => {
+          navigation.goBack()
+        }
+      )
+  
+      blocks.spacer(height: 16)
+  
+      blocks.title(
+        title: "Transações",
+        variant: "normal"
+      )
+  
+      blocks.spacer(height: 8)
+  
+      blocks.button(
+        children: "Ver Pix e TED",
+        onPress => {
+          hit.find(
+            value: temp.listaCompleta,
+            where: element.type === "pix" || element.type === "ted"
+          ) -> (
+            listaTransacoes.data: fn.result
+          )
+        }
+      )
+  
+      blocks.spacer(height: 8)
+  
+      blocks.list(
+        hid: "listaTransacoes",
+        trackBy: "id",
+        disableFastRender: true,
+        data: [],
+        renderItem: render<blocks.`list-item`>(
+          contentArea: {
+            variant: "label+plus",
+            label: item.descricao,
+            plus: item.type
+          }
+        )
+      )
+    }
+  }
+}

@@ -1,0 +1,3 @@
+hit:
+  name: "filtrar-por-perfil"
+  entrypoint: "main.hit"

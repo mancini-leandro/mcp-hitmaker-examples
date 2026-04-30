@@ -1,0 +1,3 @@
+hit:
+  name: "adicionar-campo-calculado"
+  entrypoint: "main.hit"

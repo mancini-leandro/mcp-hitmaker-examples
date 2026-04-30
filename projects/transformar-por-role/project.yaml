@@ -1,0 +1,3 @@
+hit:
+  name: "transformar-por-role"
+  entrypoint: "main.hit"

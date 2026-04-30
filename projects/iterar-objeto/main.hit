@@ -1,0 +1,65 @@
+hit(
+  id: "iterar-objeto",
+  name: "iterar-objeto",
+  scope: "demo"
+) {
+  step(
+    hid: "main",
+    navType: "push",
+    lifecycle: {
+      onCreate => {
+        hit.set() -> (
+          temp.configuracoes: {
+            tema: "escuro",
+            idioma: "pt-BR",
+            notificacoes: true,
+            fuso: "America/Sao_Paulo"
+          }
+        )
+      }
+    }
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%"
+    ) {
+      blocks.`icon-button`(
+        accessibilityLabel: "Voltar",
+        icon: "apl3_ic_arrow_left",
+        onPress => {
+          navigation.goBack()
+        }
+      )
+  
+      blocks.spacer(height: 16)
+  
+      blocks.title(
+        title: "Configurações",
+        variant: "normal"
+      )
+  
+      blocks.spacer(height: 16)
+  
+      blocks.button(
+        children: "Inspecionar configurações",
+        onPress => {
+          hit.entryEach(
+            value: temp.configuracoes
+          ) {
+            log.info(
+              name: "CONFIG",
+              msg: [fn.previous.key, fn.previous.value]
+            )
+          }
+  
+          hit.entryEachEnd() {
+            log.info(
+              name: "CONFIG",
+              msg: ["Leitura concluída"]
+            )
+          }
+        }
+      )
+    }
+  }
+}

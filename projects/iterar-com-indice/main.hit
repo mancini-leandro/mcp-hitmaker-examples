@@ -1,0 +1,89 @@
+hit(
+  id: "iterar-com-indice",
+  name: "iterar-com-indice",
+  scope: "demo"
+) {
+  step(
+    hid: "main",
+    navType: "push",
+    lifecycle: {
+      onCreate => {
+        hit.set() -> (
+          temp.lista: [
+            { id: "1", nome: "Primeiro" },
+            { id: "2", nome: "Segundo" },
+            { id: "3", nome: "Terceiro" }
+          ],
+          temp.listaProcessada: []
+        )
+      }
+    }
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%"
+    ) {
+      blocks.`icon-button`(
+        accessibilityLabel: "Voltar",
+        icon: "apl3_ic_arrow_left",
+        onPress => {
+          navigation.goBack()
+        }
+      )
+  
+      blocks.spacer(height: 16)
+  
+      blocks.title(
+        title: "Iterar com índice",
+        variant: "normal"
+      )
+  
+      blocks.spacer(height: 16)
+  
+      blocks.button(
+        children: "Processar com índice",
+        onPress => {
+          hit.forEach(
+            value: temp.lista,
+            withIndex: true
+          ) {
+            hit.insert(
+              value: temp.listaProcessada,
+              content: [{
+                id: fn.previous.item.id,
+                nome: fn.previous.item.nome,
+                valor: fn.previous.index
+              }]
+            ) -> (
+              temp.listaProcessada: fn.result
+            ) {
+              hit.set() -> (
+                listaDemo.data: temp.listaProcessada
+              ) {
+                hit.remount(
+                  hid: "listaDemo"
+                )
+              }
+            }
+          }
+        }
+      )
+
+      blocks.spacer(height: 8)
+  
+      blocks.list(
+        hid: "listaDemo",
+        trackBy: "id",
+        disableFastRender: true,
+        data: [],
+        renderItem: render<blocks.`list-item`>(
+          contentArea: {
+            variant: "label+plus",
+            label: item.nome,
+            plus: item.valor
+          }
+        )
+      )
+    }
+  }
+}

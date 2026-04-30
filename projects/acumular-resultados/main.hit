@@ -1,0 +1,75 @@
+hit(
+  id: "acumular-resultados",
+  name: "acumular-resultados",
+  scope: "demo"
+) {
+  step(
+    hid: "main",
+    navType: "push",
+    lifecycle: {
+      onCreate => {
+        hit.set() -> (
+          temp.lista: [
+            { id: "u1", nome: "Maria", saldo: 100 },
+            { id: "u2", nome: "João", saldo: 250 },
+            { id: "u3", nome: "Ana", saldo: 75 }
+          ],
+          temp.mapaUsuarios: {},
+          temp.totalUsuarios: 0
+        )
+  
+        hit.forEach(
+          value: temp.lista
+        ) {
+          hit.entry(
+            value: temp.mapaUsuarios,
+            entries: [
+              {
+                key: fn.previous.id,
+                value: fn.previous
+              }
+            ]
+          ) -> (
+            temp.mapaUsuarios: fn.result
+          )
+        }
+  
+        hit.forEachEnd() {
+          hit.set() -> (
+            temp.totalUsuarios: temp.lista.length,
+            totalUsuariosResumo.value: `${temp.lista.length}`
+          )
+        }
+      }
+    }
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%"
+    ) {
+      blocks.`icon-button`(
+        accessibilityLabel: "Voltar",
+        icon: "apl3_ic_arrow_left",
+        onPress => {
+          navigation.goBack()
+        }
+      )
+  
+      blocks.spacer(height: 16)
+  
+      blocks.title(
+        title: "Mapa de usuários",
+        variant: "normal"
+      )
+  
+      blocks.spacer(height: 8)
+  
+      blocks.value(
+        hid: "totalUsuariosResumo",
+        mode: "simple",
+        title: "Total de usuários",
+        value: "0"
+      )
+    }
+  }
+}

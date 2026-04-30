@@ -1,0 +1,3 @@
+hit:
+  name: "transformar-status"
+  entrypoint: "main.hit"

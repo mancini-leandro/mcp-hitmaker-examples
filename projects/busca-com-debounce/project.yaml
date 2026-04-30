@@ -1,0 +1,3 @@
+hit:
+  name: "busca-com-debounce"
+  entrypoint: "main.hit"

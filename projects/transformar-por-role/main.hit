@@ -1,0 +1,103 @@
+hit(
+  id: "transformar-por-role",
+  name: "transformar-por-role",
+  scope: "demo"
+) {
+  step(
+    hid: "main",
+    navType: "push",
+    lifecycle: {
+      onCreate => {
+        hit.set() -> (
+          temp.listaOriginal: [
+            { id: "1", nome: "Maria", user: { role: "admin" } },
+            { id: "2", nome: "João", user: { role: "viewer" } },
+            { id: "3", nome: "Ana", user: { role: "editor" } },
+            { id: "4", nome: "Pedro", user: { role: "viewer" } }
+          ]
+        ) {
+          hit.map(
+            value: temp.listaOriginal,
+            key: "user.role",
+            mappers: {
+              admin: {
+                id: element.id,
+                nome: element.nome,
+                user: element.user,
+                roleLabel: "Administrador",
+                canEdit: true
+              },
+              editor: {
+                id: element.id,
+                nome: element.nome,
+                user: element.user,
+                roleLabel: "Editor",
+                canEdit: true
+              },
+              viewer: {
+                id: element.id,
+                nome: element.nome,
+                user: element.user,
+                roleLabel: "Visualizador",
+                canEdit: false
+              }
+            },
+            default: {
+              id: element.id,
+              nome: element.nome,
+              user: element.user,
+              roleLabel: "Desconhecido",
+              canEdit: false
+            }
+          ) -> (
+            temp.listaMapeada: fn.result
+          ) {
+            hit.set() -> (
+              listaUsuarios.data: temp.listaMapeada
+            ) {
+              hit.remount(
+                hid: "listaUsuarios"
+              )
+            }
+          }
+        }
+      }
+    }
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%"
+    ) {
+      blocks.`icon-button`(
+        accessibilityLabel: "Voltar",
+        icon: "apl3_ic_arrow_left",
+        onPress => {
+          navigation.goBack()
+        }
+      )
+  
+      blocks.spacer(height: 16)
+  
+      blocks.title(
+        title: "Equipe",
+        variant: "normal"
+      )
+  
+      blocks.spacer(height: 8)
+  
+      blocks.list(
+        hid: "listaUsuarios",
+        trackBy: "id",
+        disableFastRender: true,
+        data: [],
+        renderItem: render<blocks.`list-item`>(
+          contentArea: {
+            variant: "label+plus",
+            label: item.input.nome,
+            plus: item.output.roleLabel
+          }
+        )
+      )
+    }
+  }
+}

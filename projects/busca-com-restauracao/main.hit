@@ -1,0 +1,89 @@
+hit(
+  id: "busca-com-restauracao",
+  name: "busca-com-restauracao",
+  scope: "demo"
+) {
+  step(
+    hid: "main",
+    navType: "push",
+    lifecycle: {
+      onCreate => {
+        hit.set() -> (
+          temp.listaOriginal: [
+            { id: "1", name: "Maria Silva" },
+            { id: "2", name: "João Santos" },
+            { id: "3", name: "Ana Costa" },
+            { id: "4", name: "Pedro Lima" },
+            { id: "5", name: "Luiza Souza" }
+          ]
+        )
+  
+        hit.set() -> (
+          listaContatos.data: temp.listaOriginal
+        )
+      }
+    }
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%"
+    ) {
+      blocks.`icon-button`(
+        accessibilityLabel: "Voltar",
+        icon: "apl3_ic_arrow_left",
+        onPress => {
+          navigation.goBack()
+        }
+      )
+  
+      blocks.spacer(height: 16)
+  
+      blocks.title(
+        title: "Contatos",
+        variant: "normal"
+      )
+  
+      blocks.spacer(height: 8)
+  
+      blocks.`search-bar`(
+        placeholder: "Buscar contato...",
+        ml: 16,
+        mr: 16,
+        onChangeText => {
+          hit.set() -> (
+            temp.termoBusca: fn.event
+          ) {
+            if (temp.termoBusca !== "") {
+              hit.find(
+                value: temp.listaOriginal,
+                where: element.name match `/${temp.termoBusca}/i`
+              ) -> (
+                listaContatos.data: fn.result
+              )
+            }
+  
+            if (temp.termoBusca === "") -> (
+              listaContatos.data: temp.listaOriginal
+            )
+          }
+        }
+      )
+  
+      blocks.spacer(height: 8)
+  
+      blocks.list(
+        hid: "listaContatos",
+        trackBy: "id",
+        disableFastRender: true,
+        data: [],
+        renderItem: render<blocks.`list-item`>(
+          contentArea: {
+            variant: "label",
+            label: item.name
+          },
+          elementAction: { type: "icon", icon: "apl3_ic_chevron_right" }
+        )
+      )
+    }
+  }
+}

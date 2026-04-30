@@ -1,0 +1,3 @@
+hit:
+  name: "acumular-resultados"
+  entrypoint: "main.hit"

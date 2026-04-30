@@ -1,0 +1,84 @@
+hit(
+  id: "busca-com-debounce",
+  name: "busca-com-debounce",
+  scope: "demo"
+) {
+  step(
+    hid: "main",
+    navType: "push",
+    lifecycle: {
+      onCreate => {
+        hit.set() -> (
+          temp.listaProdutos: [
+            { id: "1", name: "Notebook Dell", categoria: "Eletrônicos" },
+            { id: "2", name: "Mouse Logitech", categoria: "Periféricos" },
+            { id: "3", name: "Teclado Mecânico", categoria: "Periféricos" },
+            { id: "4", name: "Monitor LG", categoria: "Eletrônicos" },
+            { id: "5", name: "Headset Sony", categoria: "Áudio" }
+          ]
+        )
+  
+        hit.set() -> (
+          listaProdutos.data: temp.listaProdutos
+        )
+      }
+    }
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%"
+    ) {
+      blocks.`icon-button`(
+        accessibilityLabel: "Voltar",
+        icon: "apl3_ic_arrow_left",
+        onPress => {
+          navigation.goBack()
+        }
+      )
+  
+      blocks.spacer(height: 16)
+  
+      blocks.title(
+        title: "Produtos",
+        variant: "normal"
+      )
+  
+      blocks.spacer(height: 8)
+  
+      blocks.`search-bar`(
+        placeholder: "Buscar produto...",
+        ml: 16,
+        mr: 16,
+        onChangeText => {
+          hit.debounce(
+            id: "debounce-produto",
+            delay: 300
+          ) {
+            hit.find(
+              value: temp.listaProdutos,
+              where: element.name match `/${fn.event}/i`
+            ) -> (
+              listaProdutos.data: fn.result
+            )
+          }
+        }
+      )
+  
+      blocks.spacer(height: 8)
+  
+      blocks.list(
+        hid: "listaProdutos",
+        trackBy: "id",
+        disableFastRender: true,
+        data: [],
+        renderItem: render<blocks.`list-item`>(
+          contentArea: {
+            variant: "label+plus",
+            label: item.name,
+            plus: item.categoria
+          }
+        )
+      )
+    }
+  }
+}
