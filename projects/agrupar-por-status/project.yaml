@@ -1,0 +1,3 @@
+hit:
+  name: "agrupar-por-status"
+  entrypoint: "main.hit"

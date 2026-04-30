@@ -1,0 +1,89 @@
+hit(
+  id: "agrupar-por-status",
+  name: "agrupar-por-status",
+  scope: "demo"
+) {
+  step(
+    hid: "main",
+    navType: "push",
+    lifecycle: {
+      onCreate => {
+        hit.set() -> (
+          temp.transacoes: [
+            { id: "1", descricao: "Pagamento A", status: "aprovado" },
+            { id: "2", descricao: "Pagamento B", status: "pendente" },
+            { id: "3", descricao: "Pagamento C", status: "aprovado" },
+            { id: "4", descricao: "Pagamento D", status: "cancelado" },
+            { id: "5", descricao: "Pagamento E", status: "pendente" }
+          ]
+        ) {
+          hit.group(
+            value: temp.transacoes,
+            key: "status"
+          ) -> (
+            temp.grupos: fn.result
+          ) {
+            hit.map(
+              value: temp.grupos,
+              mappers: {},
+              default: {
+                label: {
+                  name: element.value,
+                  badge: element.items.length
+                },
+                content: {
+                  items: element.items
+                }
+              }
+            ) -> (
+              listaTransacoes.data: fn.result
+            ) {
+              hit.remount(hid: "listaTransacoes")
+            }
+          }
+        }
+      }
+    }
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%"
+    ) {
+      blocks.`icon-button`(
+        accessibilityLabel: "Voltar",
+        icon: "apl3_ic_arrow_left",
+        onPress => {
+          navigation.goBack()
+        }
+      )
+  
+      blocks.spacer(height: 16)
+  
+      blocks.title(
+        title: "Transações",
+        variant: "normal"
+      )
+  
+      blocks.spacer(height: 8)
+  
+      blocks.`section-list`(
+        hid: "listaTransacoes",
+        itemHeight: 96,
+        keyHeader: "output.label.name",
+        keyItem: "output.content.items",
+        data: [],
+        renderHeader: render<blocks.`section-title`>(
+          title: item.output.label.name,
+        ),
+        renderItem: render<blocks.`list-item`>(
+          divider: true,
+          contentArea: {
+            variant: "label+plus",
+            label: item.descricao,
+            plus: item.status
+          },
+        ),
+      )
+    }
+  }
+}

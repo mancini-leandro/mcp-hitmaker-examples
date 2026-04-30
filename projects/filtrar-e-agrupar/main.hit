@@ -1,0 +1,95 @@
+hit(
+  id: "filtrar-e-agrupar",
+  name: "filtrar-e-agrupar",
+  scope: "demo"
+) {
+  step(
+    hid: "main",
+    navType: "push",
+    lifecycle: {
+      onCreate => {
+        hit.set() -> (
+          temp.listaCompleta: [
+            { id: "1", nome: "Item A", active: true, type: "digital" },
+            { id: "2", nome: "Item B", active: false, type: "fisico" },
+            { id: "3", nome: "Item C", active: true, type: "fisico" },
+            { id: "4", nome: "Item D", active: true, type: "digital" },
+            { id: "5", nome: "Item E", active: false, type: "digital" }
+          ]
+        ) {
+          hit.find(
+            value: temp.listaCompleta,
+            where: element.active === true
+          ) -> (
+            temp.ativos: fn.result
+          ) {
+            hit.group(
+              value: temp.ativos,
+              key: "type"
+            ) -> (
+              temp.grupos: fn.result
+            ) {
+              hit.map(
+                value: temp.grupos,
+                mappers: {},
+                default: {
+                  label: {
+                    name: element.value,
+                    badge: element.items.length
+                  },
+                  content: {
+                    items: element.items
+                  }
+                }
+              ) -> (
+                listaTransacoes.data: fn.result
+              ) {
+                hit.remount(hid: "listaTransacoes")
+              }
+            }
+          }
+        }
+      }
+    }
+  ) {
+    blocks.scroll(
+      width: "100%",
+      height: "100%"
+    ) {
+      blocks.`icon-button`(
+        accessibilityLabel: "Voltar",
+        icon: "apl3_ic_arrow_left",
+        onPress => {
+          navigation.goBack()
+        }
+      )
+  
+      blocks.spacer(height: 16)
+  
+      blocks.title(
+        title: "Itens ativos por tipo",
+        variant: "normal"
+      )
+  
+      blocks.spacer(height: 8)
+  
+      blocks.`section-list`(
+        hid: "listaTransacoes",
+        itemHeight: 96,
+        keyHeader: "output.label.name",
+        keyItem: "output.content.items",
+        data: [],
+        renderHeader: render<blocks.`section-title`>(
+          title: item.output.label.name,
+        ),
+        renderItem: render<blocks.`list-item`>(
+          divider: true,
+          contentArea: {
+            variant: "label",
+            label: item.nome
+          },
+        ),
+      )
+    }
+  }
+}
